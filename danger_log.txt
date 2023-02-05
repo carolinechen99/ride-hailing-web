@@ -1,0 +1,12 @@
+After creating a new app
+    - import required models in urls.py and views.py
+    - add app config to settings.py-installed_apps
+    - add urls to urls.py in the main project
+
+Remember to amend allowed hosts in settings.py to include the domain name
+
+Amend datebase info in settings.py everytime when using different computers
+
+collectstatic after changing static files(python manage.py collectstatic)
+
+modify boostrap address after copying bootstrap files to templates
