@@ -6,3 +6,7 @@ After creating a new app
 Remember to amend allowed hosts in settings.py to include the domain name
 
 Amend datebase info in settings.py everytime when using different computers
+
+collectstatic after changing static files(python manage.py collectstatic)
+
+modify boostrap address after copying bootstrap files to templates
