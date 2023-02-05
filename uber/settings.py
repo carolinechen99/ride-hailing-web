@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ra(&rid4gwo(hv%pcw&bnac-**4)=r-%3zz7mxb$+jii)5e@ny
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['vcm-31217.vm.duke.edu']
+ALLOWED_HOSTS = ['vcm-31217.vm.duke.edu','127.0.0.1']
 
 
 # Application definition
