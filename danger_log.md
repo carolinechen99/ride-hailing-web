@@ -1,1 +1,3 @@
-Don't forget to add app config to settings.py after creating a new app.
+After creating a new app
+    - add app config to settings.py-installed_apps
+    - add urls to urls.py in the main project
