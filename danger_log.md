@@ -1,0 +1,1 @@
+Don't forget to add app config to settings.py after creating a new app.
