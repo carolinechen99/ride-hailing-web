@@ -68,3 +68,6 @@ def logout(request):
 
 def profile(request):
     return render(request, 'account/profile.html')
+
+def driver_register(request):
+    return render(request, 'account/driver_register.html')
