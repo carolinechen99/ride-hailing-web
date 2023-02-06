@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig', # add from pages app
     'account.apps.AccountConfig', # add from account app
     'ride.apps.RideConfig', # add from ride app
-    'postgres_composite_types', # for postgres tuple field
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
