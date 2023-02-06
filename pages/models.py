@@ -9,6 +9,7 @@ class CarType(models.TextChoices):
 
 class Account(models.Model):
     uid = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField()

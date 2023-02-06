@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+# Import models
+from .models import Account
 
 def register(request):
     if request.method == 'POST':
@@ -30,6 +32,11 @@ def register(request):
                     # messages.success(request, 'You are now logged in')
                     # return redirect('index')
                     user.save()
+                    # Also create an account in the Account table
+                    account = Account(user_id=user.id, first_name=first_name, last_name=last_name, username=username, email=email)
+                    account.save()
+       
+
                     
                     messages.success(request, 'Successfully registered, now ready to login')
                     return redirect('login')
@@ -66,4 +73,22 @@ def profile(request):
     return render(request, 'account/profile.html')
 
 def driver_register(request):
-    return render(request, 'account/driver_register.html')
+    if request.method == 'POST':
+        # Get form values
+        vehicle_plate = request.POST['vehicle_plate']
+        vehicle_type = request.POST['vehicle_type']
+        vehicle_seats = request.POST['vehicle_seats']
+        driver_liscense = request.POST['driver_liscense']
+
+        # Check if vehical plate is unique 
+        if Account.objects.filter(vehicle_plate=vehicle_plate).exists():
+            messages.error(request, 'That vehicle plate is taken')
+            return redirect('driver_register')
+        else:
+            # Check if driver liscense is unique 
+            if Account.objects.filter(driver_liscense=driver_liscense).exists():
+                messages.error(request, 'That driver liscense is taken')
+                return redirect('driver_register')
+            
+    else:
+        return render(request, 'account/driver_register.html')
