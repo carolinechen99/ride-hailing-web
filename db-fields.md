@@ -1,10 +1,10 @@
 # Database Fields
 
 ## Ride
-- id: int
+- rid: int
 - driver_id: int 
-- rider_id: int
-- rider_party_size: int
+- owner_id: int
+- owner_party_size: int
 - sharers: [{sharer_id: int, sharer_party_size: int}, ...]
 - required_arrival_time: datetime
 - pickup_location: string
@@ -12,6 +12,7 @@
 - (destination_lat: float)
 - status: string(open, confirmed, canceled, completed)
 - allow_sharing: bool
+- special_requirements: string
 - (pickup_lat: float)
 - (pickup_long: float)
 - (destination_long: float)
@@ -21,7 +22,7 @@
 
 
 ## Account
-- id: int
+- uid: int
 - first_name: string
 - last_name: string
 - email: string
