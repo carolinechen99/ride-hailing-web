@@ -33,6 +33,7 @@
 - (vehical color: string)
 - (vehical plate: string)
 - (vehical make: string)
+- (vehical type: string)
 - (vehical model: string)
 - (vehical year: int)
 - (vehical seats: int)

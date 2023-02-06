@@ -3,19 +3,18 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 
-# class Party(CompositeType):
-#     """A party with size and leader's id."""
-#     party_size = models.IntegerField()
-#     leader_id = models.IntegerField()
-    
-#     class Meta:
-#         db_type = 'party'  # Required
 
 class Status(models.TextChoices):
         OPEN = 'OP', _('open')
         CONFIRMED = 'CF', _('confirmed')
         COMPLETED = 'CP', _('completed')
         CANCELLED = 'CL', _('cancelled')
+
+class CarType(models.TextChoices):
+        COMPACT = 'CM', _('compact')
+        SUV = 'SU', _('suv')
+        LUXURY = 'LX', _('luxury')
+        MINIVAN = 'MV', _('minivan')
 
 
 # Create your models here.
@@ -45,6 +44,7 @@ class Account(models.Model):
     vehicle_color = models.CharField(max_length=100, blank=True)
     vehicle_plate = models.CharField(max_length=100, blank=True)
     vehicle_make = models.CharField(max_length=100, blank=True)
+    vehicle_type = models.CharField(max_length=2, choices=CarType.choices, default=CarType.COMPACT, blank=True)
     vehicle_model = models.CharField(max_length=100, blank=True)
     vehicle_year = models.IntegerField(blank=True, null=True)
     vehicle_seats = models.IntegerField(blank=True, null=True)
