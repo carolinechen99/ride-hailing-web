@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404,render
 from django.http import HttpResponse
 # Import models
-from .models import Ride, Account
+from .models import Ride
+from account.models import Account
 
 
 def request_ride(request):
