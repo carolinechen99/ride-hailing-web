@@ -9,7 +9,6 @@ def register(request):
         last_name = request.POST['last_name']
         username = request.POST['username']
         email = request.POST['email']
-        phone_number = request.POST['phone_number']
         password = request.POST['password']
         password2 = request.POST['password2']
 
@@ -24,19 +23,16 @@ def register(request):
                     messages.error(request, 'That email is being used')
                     return redirect('register')
                 else:
-                    if User.objects.filter(phone_number=phone_number).exists():
-                        messages.error(request, 'That phone number is being used')
-                        return redirect('register')
-                    else:
-                        # Looks good
-                        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, phone_number=phone_number, password=password)
-                        # Login after register
-                        # auth.login(request, user)
-                        # messages.success(request, 'You are now logged in')
-                        # return redirect('index')
-                        user.save()
-                        messages.success(request, 'Successfully registered, now ready to login')
-                        return redirect('login')
+                    # Looks good
+                    user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+                    # Login after register
+                    # auth.login(request, user)
+                    # messages.success(request, 'You are now logged in')
+                    # return redirect('index')
+                    user.save()
+                    
+                    messages.success(request, 'Successfully registered, now ready to login')
+                    return redirect('login')
         else:
             messages.error(request, 'Passwords do not match')
             return redirect('register')

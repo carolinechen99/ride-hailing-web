@@ -15,6 +15,14 @@
         <div class="row g-3">
 
           <div class="col-12">
+            <label for="pickup-loc" class="form-label">Pickup Location</label>
+            <input type="text" class="form-control" id="pickup-loc" placeholder="567 Main St" required>
+            <div class="invalid-feedback">
+              Please enter your pickup location.
+            </div>
+          </div>
+
+          <div class="col-12">
             <label for="destination" class="form-label">Destination Address</label>
             <input type="text" class="form-control" id="destination" placeholder="1234 Main St" required>
             <div class="invalid-feedback">
@@ -23,9 +31,9 @@
           </div>
 
           <div class="col-12">
-            <label for="arr_time" class="form-label">Required arrival time</label>
+            <label for="arr-time" class="form-label">Required arrival time</label>
             <div class="input-group has-validation">
-              <input type="datetime-local" class="form-control" id="arr_time" required>
+              <input type="datetime-local" class="form-control" id="arr-time" required>
             <div class="invalid-feedback">
                 Your arrival date/time is required.
               </div>
