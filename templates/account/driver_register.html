@@ -17,16 +17,16 @@
                 <form action= "{% url 'driver_register'%}" method="POST">
                     {% csrf_token %}
                   <div class="form-group">
-                  <label for="first_name">First Name</label>
-                  <input type="text" name="first_name" class="form-control" required>
+                  <label for="vehicle_plate">Vehicle Plate</label>
+                  <input type="text" name="vehicle_plate" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label for="last_name">Last Name</label>
-                  <input type="text" name="last_name" class="form-control" required>
+                  <label for="vehicle_type">Vehicle Type</label>
+                  <input type="text" name="vehicle_type" class="form-control" required>
                 </div>
                 <div class="form-group">
-                  <label for="username">Username</label>
-                  <input type="text" name="username" class="form-control" required>
+                  <label for="vehicle_seats">Vehicle Seats</label>
+                  <input type="text" name="vehicle_seats" class="form-control" required>
                 </div>
                 <div class="form-group">
                   <label for="email">Email</label>

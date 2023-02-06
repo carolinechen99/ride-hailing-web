@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Account
 
 def register(request):
     if request.method == 'POST':
@@ -16,20 +16,20 @@ def register(request):
         # Check if passwords match
         if password == password2:
             # Check username
-            if User.objects.filter(username=username).exists():
+            if Account.objects.filter(username=username).exists():
                 messages.error(request, 'That username is taken')
                 return redirect('register')
             else:
-                if User.objects.filter(email=email).exists():
+                if Account.objects.filter(email=email).exists():
                     messages.error(request, 'That email is being used')
                     return redirect('register')
                 else:
-                    if User.objects.filter(phone_number=phone_number).exists():
+                    if Account.objects.filter(phone_number=phone_number).exists():
                         messages.error(request, 'That phone number is being used')
                         return redirect('register')
                     else:
                         # Looks good
-                        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, phone_number=phone_number, password=password)
+                        user = Account.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, phone_number=phone_number, password=password)
                         # Login after register
                         # auth.login(request, user)
                         # messages.success(request, 'You are now logged in')
