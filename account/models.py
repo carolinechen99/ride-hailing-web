@@ -14,7 +14,7 @@ class CarType(models.TextChoices):
 
 class Account(models.Model):
     # link account with User
-    uid = models.AutoField(primary_key=True)
+    uid = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)

@@ -13,7 +13,8 @@ modify boostrap address after copying bootstrap files to templates
 
 Use appname:urlname to link to other pages in different app
 
-
+HTML form pitfall: input must have 'name' - otherwise after submit there won't 
+be any payload data. some template curiously don't have 'name' in <input>
 
 To improve:
  - let notification fade away after a while
