@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Import models
 from .models import Account
 
+
 def register(request):
     if request.method == 'POST':
         # Get form values

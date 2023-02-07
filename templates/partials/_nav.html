@@ -30,7 +30,7 @@
               class="nav-item mr-3" 
               {% endif %}
               >
-                <a class="nav-link" href="{% url 'profile' %}">
+                <a class="nav-link" href="{% url 'account:profile' %}">
                   Welcome {{ user.first_name }}</a>
               </li>
               <!-- Logout -->
@@ -47,23 +47,23 @@
 
             {% else %}
               <li 
-              {% if 'register' == request.path %} 
+              {% if 'account:register' == request.path %} 
               class="nav-item active mr-3" 
               {% else %} 
               class="nav-item mr-3" 
               {% endif %}
               >
-                <a class="nav-link" href="{% url 'register' %}">
+                <a class="nav-link" href="{% url 'account:register' %}">
                   <i class="fas fa-user-plus"></i> Register</a>
               </li>
               <li 
-              {% if 'login' == request.path %} 
+              {% if 'account:login' == request.path %} 
               class="nav-item active mr-3" 
             {% else %} 
               class="nav-item mr-3" 
             {% endif %}
               >
-                <a class="nav-link" href="{% url 'login' %}">
+                <a class="nav-link" href="{% url 'account:login' %}">
                   <i class="fas fa-sign-in-alt"></i>
       
                   Login</a>
