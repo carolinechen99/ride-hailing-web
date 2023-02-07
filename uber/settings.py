@@ -76,20 +76,33 @@ WSGI_APPLICATION = 'uber.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'rideshare_db',
+#         'USER': 'jl1188',
+#         'PASSWORD': 'rideshare',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rideshare_db',
-        'USER': 'jl1188',
-        'PASSWORD': 'rideshare',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': 'uber',
+        'USER': 'postgres',
+        'PASSWORD':'123456',
+        'HOST': 'localhost'
     }
+
+}
+
+
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
-}
+
 
 
 # Password validation

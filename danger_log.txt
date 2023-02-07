@@ -13,3 +13,10 @@ modify boostrap address after copying bootstrap files to templates
 
 Use appname:urlname to link to other pages in different app
 
+
+
+To improve:
+ - let notification fade away after a while
+
+Profile design:
+ - Show drivers' info part only when is_driver is true

@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404,render
+from django.shortcuts import get_object_or_404, redirect,render
 from django.http import HttpResponse
 # Import models
 from .models import Ride
@@ -29,4 +29,7 @@ def request_ride(request):
         r = Ride(owner_id=request.user.id, owner_party_size = party_size, required_arrival_time = arr_time, pickup_location = pickup_location, destination = destination, allow_sharing = allow_sharing, car_type = car_type, special = special)
         r.save()
         messages.success(request, 'Successfully registered, now ready to login')
+
+def driver(request):
+    return render(request, 'ride/driver.html')
     

@@ -14,30 +14,57 @@
             <div class="card-body">
               <!-- Alerts -->
               {% include 'partials/_alerts.html' %}
-                <form action= "{% url 'driver_register'%}" method="POST">
+                <form action= "{% url 'account:driver_register'%}" method="POST">
                     {% csrf_token %}
+                  
+                    <div class="form-group">
+                      <label for="phone">Phone Number</label>
+                      <input type="text" name="phone" class="form-control" required>  
+                    </div>
+
+                    <div class="form-group">
+                      <label for="driver_license">Driver License</label>
+                      <input type="text" name="driver_license" class="form-control" required>
+                    </div>
+
                   <div class="form-group">
                   <label for="vehicle_plate">Vehicle Plate</label>
                   <input type="text" name="vehicle_plate" class="form-control" required>
                 </div>
 
+               <!-- Show option for car type and submit the selected one to form
+                    class CarType(models.TextChoices):
+                      COMPACT = 'CM', _('compact')
+                      SUV = 'SU', _('suv')
+                      LUXURY = 'LX', _('luxury')
+                      MINIVAN = 'MV', _('minivan')
+                    -->
+
+                    
                 <label for="vehicle_type">Vehicle Type</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <option selected>Select vehicle type</option>
-                    <option value="CM">Compact</option>
-                    <option value="SU">SUV</option>
-                    <option value="LX">Luxury</option>
-                    <option value="MV">Minivan</option>
+                <select name="vehicle_type" class="form-control" aria-label=".form-select-sm example">
+                  <option selected>Select vehicle type</option>
+                  <option value="CM">Compact</option>
+                  <option value="SU">SUV</option>
+                  <option value="LX">Luxury</option>
+                  <option value="MV">Minivan</option>
                 </select>
+                
+                <!-- <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                  <option selected>Select vehicle type</option>
+
+                  <option value="CM">Compact</option>
+                  <option value="SU">SUV</option>
+                  <option value="LX">Luxury</option>
+                  <option value="MV">Minivan</option>
+              </select> -->
+
 
                 <div class="form-group">
                   <label for="vehicle_seats">Vehicle Seats</label>
                   <input type="text" name="vehicle_seats" class="form-control" required>  
                 </div>
-                <div class="form-group">
-                  <label for="  driver_liscense">Driver License</label>
-                  <input type="text" name="driver_license" class="form-control" required>
-                </div>
+
                 <input type="submit" value="Register" class="btn btn-secondary btn-block">
               </form>
             </div>
