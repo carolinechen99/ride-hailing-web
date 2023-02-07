@@ -71,4 +71,13 @@ def sharer(request):
         else:
             messages.error(request, 'You must be logged in to share a ride')
             return redirect('account:login')
-    
+
+def ride_status(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return render(request, 'ride/ride_status.html')
+        else:
+            messages.error(request, 'You must be logged in to view your ride status')
+            return redirect('account:login')
+    if request.method == 'POST':
+        return render(request, 'ride/ride_status.html')

@@ -7,4 +7,5 @@ urlpatterns = [
     path('request_ride', views.request_ride, name='request_ride'), 
     path('driver', views.driver, name='driver'),
     path('sharer', views.sharer, name='sharer'),
+    path('ride_status', views.ride_status, name='ride_status'),
 ]
