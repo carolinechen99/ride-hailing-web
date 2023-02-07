@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404,render
+from django.shortcuts import get_object_or_404,render, redirect
 from django.http import HttpResponse
 # Import models
 from .models import Ride
@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 def request_ride(request):
     if request.method == 'POST':
         destination = request.POST.get('destination')
-        print(destination)
         pickup_location = request.POST.get('pickup-loc')
         arr_time = request.POST.get('arr-time')
         party_size = request.POST.get('party-size')
@@ -24,9 +23,10 @@ def request_ride(request):
         try:
             owner = User.objects.get(pk=request.user.id)
         except User.DoesNotExist:
+            messages.error(request, 'You are not logged in')
             return redirect('account:login')
         r = Ride(owner = owner, owner_party_size = party_size, required_arrival_time = arr_time, pickup_location = pickup_location, destination = destination, allow_sharing = allow_sharing,  special_requirements = special)
         r.save()
-        # messages.success(request, 'Successfully registered, now ready to login')
+        
     return render(request, 'ride/request_ride.html')
     

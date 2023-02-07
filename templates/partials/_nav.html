@@ -21,7 +21,7 @@
           <!-- Register & Login-->
           <ul class="navbar-nav ml-auto">
             <!-- if user is not authenticated-->
-            {% if user.is_authenticated == false %}
+            {% if user.is_authenticated %}
               <!-- Profile -->
               <li 
               {% if 'profile' == request.path %} 
@@ -39,7 +39,7 @@
                 class="nav-link">
                   <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
-                <form id="logout" action="{% url 'logout' %}" method="POST">
+                <form id="logout" action="{% url 'account:logout' %}" method="POST">
                   {% csrf_token %}
                   <input type="hidden">
                 </form>
