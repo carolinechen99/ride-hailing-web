@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% include 'partials/_nav.html' %}
 <section id="request-ride" class="my-5 mx-5" style="max-width: 960px;">
   <div class="py-5 text-center">
     <h2>Ride Request</h2>
@@ -10,13 +11,14 @@
   <div class="row g-5">
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3">Ride specifics</h4>
-      <form class="needs-validation" novalidate action="{% url 'ride:request_ride'  %}" method="post">
+      <form  action="{% url 'ride:request_ride'  %}" method="POST">
         {% csrf_token %}
+        <fieldset>
         <div class="row g-3">
 
           <div class="col-12">
             <label for="pickup-loc" class="form-label">Pickup Location</label>
-            <input type="text" class="form-control" id="pickup-loc" placeholder="567 Main St" required>
+            <input name="pickup-loc" type="text" class="form-control" id="pickup-loc" placeholder="567 Main St" required>
             <div class="invalid-feedback">
               Please enter your pickup location.
             </div>
@@ -24,7 +26,7 @@
 
           <div class="col-12">
             <label for="destination" class="form-label">Destination Address</label>
-            <input type="text" class="form-control" id="destination" placeholder="1234 Main St" required>
+            <input name="destination" type="text" class="form-control" id="destination" placeholder="1234 Main St" required>
             <div class="invalid-feedback">
               Please enter your destination address.
             </div>
@@ -33,7 +35,7 @@
           <div class="col-12">
             <label for="arr-time" class="form-label">Required arrival time</label>
             <div class="input-group has-validation">
-              <input type="datetime-local" class="form-control" id="arr-time" required>
+              <input name="arr-time" type="datetime-local" class="form-control" id="arr-time" required>
             <div class="invalid-feedback">
                 Your arrival date/time is required.
               </div>
@@ -42,7 +44,7 @@
 
           <div class="col-sm-6">
             <label for="party-size" class="form-label">Number of Passengers in your party</label>
-            <input type="number" class="form-control" id="party-size" placeholder="1" required>
+            <input name="party-size" type="number" class="form-control" id="party-size" placeholder="1" value="1" min="1" max="7" required>
             <div class="invalid-feedback">
               Please enter a valid number for your party's size.
             </div>
@@ -50,14 +52,14 @@
 
           <div class="col-6">
             <label for="allow-sharing" class="form-check-label" style=" display:block ">Allow sharing?</label>
-            <input type="checkbox" class="form-check-input"  id="allow-sharing" value="" checked >
+            <input name="allow-sharing" type="checkbox" class="form-check-input"  id="allow-sharing" value="allow" checked>
           </div>
 
           <div class="col-12">
             <label for="car-type" class="form-label">Vehicle Type <span class="text-muted">(Optional)</span></label>
             <!-- <input type="text" class="form-control" id="car-type" placeholder="Compact"> -->
-            <select class="form-select" aria-label="Default select example" id="car-type">
-              <option selected>Open this select menu</option>
+            <select name="car-type" class="form-select" aria-label="Default select example" id="car-type">
+              <option value="" selected>Open this select menu</option>
               <option value="CM">Compact</option>
               <option value="SU">SUV</option>
               <option value="LX">Luxury</option>
@@ -67,13 +69,13 @@
 
           <div class="col-12">
             <label for="special" class="form-label">Special Request? <span class="text-muted">(Optional)</span></label>
-            <textarea class="form-control" id="special" rows="3"></textarea>
+            <textarea name="special" class="form-control" id="special" rows="3"></textarea>
           </div>
         </div>
 
         <hr class="my-4">
-
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Request A Ride</button>
+        </fieldset>
+        <input class="w-100 btn btn-primary btn-lg" type="submit">Request A Ride</input>
       </form>
     </div>
   </div>
