@@ -42,8 +42,33 @@ def request_ride(request):
 
 
 def driver(request):
-    return render(request, 'ride/driver.html')
+    if request.method == 'GET':
+    # If the User has logged in, direct to driver page
+        if request.user.is_authenticated:
+            # Check if the user account is valid
+            try:
+                account = Account.objects.get(username=request.user.username)
+            except Account.DoesNotExist:
+                messages.error(request, 'User does not exist')
+                return redirect('account:login')
+            # Check if the user is a driver
+            if account.is_driver:
+                return render(request, 'ride/driver.html')
+            else:
+                return redirect('account:driver_register')
+        else:
+            messages.error(request, 'You must be logged in to view this page')
+            return redirect('account:login')
+    
+    if request.method == 'POST':
+        return render(request, 'ride/driver.html')
+
 
 def sharer(request):
-    return render(request, 'ride/sharer.html')
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return render(request, 'ride/sharer.html')
+        else:
+            messages.error(request, 'You must be logged in to share a ride')
+            return redirect('account:login')
     

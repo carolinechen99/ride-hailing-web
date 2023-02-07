@@ -81,7 +81,22 @@ def profile(request):
     return render(request, 'account/profile.html')
 
 def driver_register(request):
-    # Check if the user is logged in, if not redirect to login page
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            #get the user account (invalid account already checked at driver function)
+            account = Account.objects.get(username=request.user.username)
+            #check if the user is already a driver
+            if account.is_driver:
+                messages.error(request, 'You are already registered as a driver')
+                return redirect('index')
+            else:
+                return render(request, 'account/driver_register.html')
+        else:
+            messages.error(request, 'You must be logged in to register as a driver')
+            return redirect('account:login')
+
+
+
     if request.method == 'POST':
         # Get form values
         phone = request.POST.get('phone')
@@ -89,32 +104,34 @@ def driver_register(request):
         vehicle_type = request.POST.get('vehicle_type')
         vehicle_seats = request.POST.get('vehicle_seats')
         driver_license = request.POST.get('driver_license')
-        # Check if the is_driver field is already true
-        if Account.objects.filter(username=request.user.username).values('is_driver')[0]['is_driver'] == True:
-            messages.error(request, 'You are already registered as a driver')
-            return redirect('index')
+
+        # Get the user
+        d_account = Account.objects.get(username=request.user.username)
+        # Check if phone number is already in use
+        if Account.objects.filter(phone=phone).exists():
+            messages.error(request, 'Phone number is already in use')
+            return redirect('account:driver_register')
         else:
-            # Check if vehicle plate is unique 
+            # Check if vehicle plate is already in use
             if Account.objects.filter(vehicle_plate=vehicle_plate).exists():
-                messages.error(request, 'That vehicle plate is taken')
+                messages.error(request, 'Vehicle plate is already in use')
                 return redirect('account:driver_register')
-            else:
-                # Check if driver_license is unique 
+            else: 
+                # Check if driver license is already in use
                 if Account.objects.filter(driver_license=driver_license).exists():
-                    messages.error(request, 'That driver_license is taken')
+                    messages.error(request, 'Driver license is already in use')
                     return redirect('account:driver_register')
                 else:
-                    # All good
-                    # Add all the information to the corresponding user in the Account table
-                    account = Account.objects.get(username=request.user.username)
-                    account.phone = phone
-                    account.vehicle_plate = vehicle_plate
-                    account.vehicle_type = vehicle_type
-                    account.vehicle_seats = vehicle_seats
-                    account.driver_license = driver_license
-                    account.is_driver = True
-                    account.save()
-                    messages.success(request, 'Successfully registered as a driver')
-                    return redirect('index')
+                    # Looks good
+                    d_account.phone = phone
+                    d_account.vehicle_plate = vehicle_plate
+                    d_account.vehicle_type = vehicle_type
+                    d_account.vehicle_seats = vehicle_seats
+                    d_account.driver_license = driver_license
+                    d_account.is_driver = True
+                    d_account.save()
+                    messages.success(request, 'You are now registered as a driver')
+                    return redirect('ride:driver')
     else:
-        return redirect('account:login')
+        return render(request, 'account/driver_register.html')
+

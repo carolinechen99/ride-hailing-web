@@ -8,15 +8,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'ride:request_ride' %}">Rider</a>
+
+            <li>
+              <a
+              {% if 'request_ride' in request.path %} 
+                class="nav-link active" 
+              {% else %} 
+                class="nav-link" 
+              {% endif %}
+               href="{% url 'ride:request_ride' %}">Rider</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'ride:sharer' %}">Sharer</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'ride:driver' %}">Driver</a>
-            </li>
+
+            <li>
+            <a
+            {% if 'sharer' in request.path %} 
+              class="nav-link active" 
+            {% else %} 
+              class="nav-link" 
+            {% endif %}
+             href="{% url 'ride:sharer' %}">Sharer</a>
+          </li>
+
+          <li>
+            <a
+            {% if 'driver' in request.path %} 
+              class="nav-link active" 
+            {% else %} 
+              class="nav-link" 
+            {% endif %}
+             href="{% url 'ride:driver' %}">Driver</a>
+          </li>
+
           </ul>
           <!-- Register & Login-->
           <ul class="navbar-nav ml-auto">
