@@ -56,7 +56,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are now logged in')
-            return redirect('request_ride')
+            return redirect('ride:request_ride')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('login')
@@ -89,6 +89,17 @@ def driver_register(request):
             if Account.objects.filter(driver_liscense=driver_liscense).exists():
                 messages.error(request, 'That driver liscense is taken')
                 return redirect('driver_register')
-            
+            else:
+                # All good
+                # Add all the information to the corresponding user in the Account table
+                account = Account.objects.get(user_id=request.user.id)
+                account.vehicle_plate = vehicle_plate
+                account.vehicle_type = vehicle_type
+                account.vehicle_seats = vehicle_seats
+                account.driver_liscense = driver_liscense
+                account.save()
+                messages.success(request, 'Successfully registered as a driver')
+                return redirect('ride:search_ride')
     else:
         return render(request, 'account/driver_register.html')
+        

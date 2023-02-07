@@ -20,10 +20,16 @@
                   <label for="vehicle_plate">Vehicle Plate</label>
                   <input type="text" name="vehicle_plate" class="form-control" required>
                 </div>
-                <div class="form-group">
-                  <label for="vehicle_type">Vehicle Type</label>
-                  <input type="text" name="vehicle_type" class="form-control" required>
-                </div>
+
+                <label for="vehicle_type">Vehicle Type</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option selected>Select vehicle type</option>
+                    <option value="CM">Compact</option>
+                    <option value="SU">SUV</option>
+                    <option value="LX">Luxury</option>
+                    <option value="MV">Minivan</option>
+                </select>
+
                 <div class="form-group">
                   <label for="vehicle_seats">Vehicle Seats</label>
                   <input type="text" name="vehicle_seats" class="form-control" required>  

@@ -11,3 +11,5 @@ collectstatic after changing static files(python manage.py collectstatic)
 
 modify boostrap address after copying bootstrap files to templates
 
+Use appname:urlname to link to other pages in different app
+
