@@ -4,8 +4,8 @@
 {% include 'partials/_nav.html' %}
 <section id="request-ride" class="my-5 mx-5" style="max-width: 960px;">
   <div class="py-5 text-center">
-    <h2>Ride Request</h2>
-    <p class="lead">Please use the following form to request a ride.</p>
+    <h2>Request a Ride</h2>
+    <p class="lead">Anywhere, anytime</p>
   </div>
 
   <div class="row g-5">
@@ -17,7 +17,7 @@
         <div class="row g-3">
 
           <div class="col-12">
-            <label for="pickup-loc" class="form-label">Pickup Location</label>
+            <label for="pickup-loc" class="form-label">Pickup</label>
             <input name="pickup-loc" type="text" class="form-control" id="pickup-loc" placeholder="567 Main St" required>
             <div class="invalid-feedback">
               Please enter your pickup location.
@@ -25,7 +25,7 @@
           </div>
 
           <div class="col-12">
-            <label for="destination" class="form-label">Destination Address</label>
+            <label for="destination" class="form-label">Drop-off</label>
             <input name="destination" type="text" class="form-control" id="destination" placeholder="1234 Main St" required>
             <div class="invalid-feedback">
               Please enter your destination address.
@@ -43,7 +43,7 @@
           </div>
 
           <div class="col-sm-6">
-            <label for="party-size" class="form-label">Number of Passengers in your party</label>
+            <label for="party-size" class="form-label">Number of Passengers</label>
             <input name="party-size" type="number" class="form-control" id="party-size" placeholder="1" value="1" min="1" max="7" required>
             <div class="invalid-feedback">
               Please enter a valid number for your party's size.
@@ -51,7 +51,7 @@
           </div>
 
           <div class="col-6">
-            <label for="allow-sharing" class="form-check-label" style=" display:block ">Allow sharing?</label>
+            <label for="allow-sharing" class="form-check-label" style=" display:block ">Allow sharing</label>
             <input name="allow-sharing" type="checkbox" class="form-check-input"  id="allow-sharing" value="allow" checked>
           </div>
 
@@ -68,14 +68,14 @@
           </div>
 
           <div class="col-12">
-            <label for="special" class="form-label">Special Request? <span class="text-muted">(Optional)</span></label>
+            <label for="special" class="form-label">Special Request <span class="text-muted">(Optional)</span></label>
             <textarea name="special" class="form-control" id="special" rows="3"></textarea>
           </div>
         </div>
 
         <hr class="my-4">
         </fieldset>
-        <input class="w-100 btn btn-primary btn-lg" type="submit">Request A Ride</input>
+        <input class="w-100 btn btn-primary btn-lg" type="submit"></input>
       </form>
     </div>
   </div>

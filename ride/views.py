@@ -9,6 +9,14 @@ from django.contrib.auth.decorators import login_required
 
 # @login_required(login_url='/account/login')
 def request_ride(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return render(request, 'ride/request_ride.html')
+        else:
+            messages.error(request, 'You must be logged in to request a ride')
+            return redirect('account:login')
+
+
     if request.method == 'POST':
         destination = request.POST.get('destination')
         pickup_location = request.POST.get('pickup-loc')
@@ -27,5 +35,15 @@ def request_ride(request):
             return redirect('account:login')
         r = Ride(owner = owner, owner_party_size = party_size, required_arrival_time = arr_time, pickup_location = pickup_location, destination = destination, allow_sharing = allow_sharing,  special_requirements = special)
         r.save()
-        messages.success(request, 'Successfully registered, now ready to login')
+        messages.success(request, 'Your ride request has been submitted')
+        return render(request, 'ride/request_ride.html')
+    else:
+        return redirect('account:login')
+
+
+def driver(request):
+    return render(request, 'ride/driver.html')
+
+def sharer(request):
+    return render(request, 'ride/sharer.html')
     
