@@ -21,8 +21,8 @@ class CarType(models.TextChoices):
 # Create your models here.
 class Ride(models.Model):
     rid = models.AutoField(primary_key=True)
-    driver_id = models.ForeignKey(User, related_name='driver', on_delete=models.DO_NOTHING, null=True)
-    owner_id = models.ForeignKey(User, related_name='owner', on_delete=models.DO_NOTHING, null=True)
+    driver_id = models.ForeignKey(User, to_field='id', related_name='driver', on_delete=models.DO_NOTHING, null=True)
+    owner_id = models.ForeignKey(User, to_field='id',related_name='owner', on_delete=models.DO_NOTHING, null=True)
     owner_party_size = models.IntegerField()
     sharers = ArrayField(models.JSONField(), null=True)
     required_arrival_time = models.DateTimeField()
@@ -31,6 +31,9 @@ class Ride(models.Model):
     status = models.CharField( max_length=2, choices=Status.choices, default=Status.OPEN)
     allow_sharing = models.BooleanField()
     special_requirements = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.rid
 
 # class Account(models.Model):
 #     uid = models.AutoField(primary_key=True)

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Import models
 from .models import Account
 
+
 def register(request):
     if request.method == 'POST':
         # Get form values
@@ -56,7 +57,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are now logged in')
-            return redirect('request_ride')
+            return redirect('ride:request_ride')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('login')

@@ -13,7 +13,7 @@
             <div class="card-body">
               <!-- Alerts -->
               {% include 'partials/_alerts.html' %}
-              <form action="{% url 'login' %}" method="POST">
+              <form action="{% url 'account:login' %}" method="POST">
                 {% csrf_token %} <!-- This is a security token that Django uses to prevent Cross Site Request Forgery attacks. -->
                 <div class="form-group">
                   <label for="username">Username</label>
