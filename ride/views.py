@@ -75,7 +75,8 @@ def sharer(request):
 def ride_status(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return render(request, 'ride/ride_status.html')
+            ride = Ride.objects.filter(owner=request.user)[0]
+            return render(request, 'ride/ride_status.html', {'ride': ride})
         else:
             messages.error(request, 'You must be logged in to view your ride status')
             return redirect('account:login')

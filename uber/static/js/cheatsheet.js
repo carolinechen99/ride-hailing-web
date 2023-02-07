@@ -70,4 +70,19 @@
 
   setActiveItem()
   window.addEventListener('hashchange', setActiveItem)
+
+  // function fillCheckbox() {
+  //   let checkbox = document.getElementById('flexSwitchCheckChecked');
+  //   console.log(ride.allow_sharing);
+  //   if (ride.allow_sharing === true) {
+  //     checkbox.checked = true;
+  //   }
+  //   else {
+  //     checkbox.checked = false;
+  //   }
+  // }
+  // fillCheckbox()
+  // window.addEventListener('hashchange', fillCheckbox)
 })()
+
+
