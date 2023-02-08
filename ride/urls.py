@@ -8,4 +8,5 @@ urlpatterns = [
     path('driver', views.driver, name='driver'),
     path('sharer', views.sharer, name='sharer'),
     path('ride_status', views.ride_status, name='ride_status'),
+    path('driver_find_ride', views.driver_find_ride, name='driver_find_ride'),
 ]

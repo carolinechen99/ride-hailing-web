@@ -14,14 +14,14 @@
   <div class="row g-5">
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3">Ride Request Attributes</h4>
-      <form  action="{% url 'ride:driver'  %}" method="POST">
+      <form action="{% url 'ride:driver_find_ride'  %}" >
         {% csrf_token %}
         <fieldset>
         <div class="row g-3">
 
           <div class="col-12">
             <label for="pickup-loc" class="form-label">Pickup</label>
-            <input name="pickup-loc" type="text" class="form-control" id="pickup-loc" placeholder="567 Main St" required>
+            <input name="pickup-loc" type="text" class="form-control" id="pickup-loc" placeholder="567 Main St">
             <div class="invalid-feedback">
               Please enter your pickup location.
             </div>
@@ -29,7 +29,7 @@
 
           <div class="col-12">
             <label for="destination" class="form-label">Drop-off</label>
-            <input name="destination" type="text" class="form-control" id="destination" placeholder="1234 Main St" required>
+            <input name="destination" type="text" class="form-control" id="destination" placeholder="1234 Main St">
             <div class="invalid-feedback">
               Please enter your destination address.
             </div>
@@ -38,30 +38,18 @@
           <div class="col-12">
             <label for="arr-time" class="form-label">Required arrival time</label>
             <div class="input-group has-validation">
-              <input name="arr-time" type="datetime-local" class="form-control" id="arr-time" required>
+              <input name="arr-time" type="datetime-local" class="form-control" id="arr-time">
             <div class="invalid-feedback">
                 Your arrival date/time is required.
               </div>
             </div>
           </div>
 
-          <div class="col-sm-6">
-            <label for="party-size" class="form-label">Number of Passengers</label>
-            <input name="party-size" type="number" class="form-control" id="party-size" placeholder="1" value="1" min="1" max="7" required>
-            <div class="invalid-feedback">
-              Please enter a valid number for your party's size.
-            </div>
-          </div>
-
-          <div class="col-6">
-            <label for="allow-sharing" class="form-check-label" style=" display:block ">Allow sharing</label>
-            <input name="allow-sharing" type="checkbox" class="form-check-input"  id="allow-sharing" value="allow" checked>
-          </div>
 
 
         <hr class="my-4">
         </fieldset>
-        <input class="w-100 btn btn-primary btn-lg" type="submit"></input>
+        <input class="w-100 btn btn-primary btn-lg" type="submit">Search</input>
       </form>
     </div>
   </div>

@@ -60,8 +60,9 @@ def driver(request):
             messages.error(request, 'You must be logged in to view this page')
             return redirect('account:login')
     
-    if request.method == 'POST':
-        return render(request, 'ride/driver.html')
+    return render(request, 'ride/driver.html')
+
+        
 
 
 def sharer(request):
@@ -82,3 +83,55 @@ def ride_status(request):
             return redirect('account:login')
     if request.method == 'POST':
         return render(request, 'ride/ride_status.html')
+
+def driver_find_ride(request):
+    # Get the driver(loggined user)'s vehicle type
+    driver_vehicle_type = Account.objects.get(username=request.user.username).vehicle_type
+    # Get all open rides
+    # vehicle_type should be the same as the driver's vehicle type
+    query_list = Ride.objects.order_by('required_arrival_time').filter(status='OP', vehicle_type=driver_vehicle_type)
+
+
+
+    # Filter by pickup location
+    ############################DEBUGGING:pickup_loc/pickup_location################################
+    if 'pickup_loc' in request.GET:
+        pickup_loc = request.GET['pickup_loc']
+        if pickup_loc:
+            query_list = query_list.filter(pickup_location__iexact=pickup_loc) 
+
+    # Filter by destination
+    if 'destination' in request.GET:
+        destination = request.GET['destination']
+        if destination:
+            query_list = query_list.filter(destination__iexact=destination)
+    
+    # Filter by arrival time
+    if 'arr_time' in request.GET:
+        arr_time = request.GET['arr_time']
+        if arr_time:
+            # if driver's arrival time is earlier than customer's arrival time, then the ride is not available
+            query_list = query_list.filter(required_arrival_time__gte=arr_time)
+    
+    context = {
+        'rides': query_list,
+        'values': request.GET # keep the search values when search is done
+    }
+
+    return render(request, 'ride/driver_find_ride.html', context)
+        
+
+
+
+        
+
+def driver_ride_status(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            ride = Ride.objects.filter(driver=request.user)[0]
+            return render(request, 'ride/driver_ride_status.html', {'ride': ride})
+        else:
+            messages.error(request, 'You must be logged in to view your ride status')
+            return redirect('account:login')
+    if request.method == 'POST':
+        return render(request, 'ride/driver_ride_status.html')

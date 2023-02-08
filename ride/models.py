@@ -31,6 +31,7 @@ class Ride(models.Model):
     status = models.CharField( max_length=2, choices=Status.choices, default=Status.OPEN)
     allow_sharing = models.BooleanField()
     special_requirements = models.CharField(max_length=100, blank=True)
+    vehicle_type = models.CharField(max_length=2, choices=CarType.choices, default=CarType.COMPACT)
 
     def __str__(self):
         return self.rid
