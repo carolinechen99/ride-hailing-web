@@ -6,41 +6,80 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+            <form action="{% url 'account:profile' %}" method="POST">
+                {% csrf_token %}
+
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">{{user.username}}</span><span class="text-black-50">{{user.email}}</span>
+            <!--If get account tableis_driver is true, show text"Driver" with a check mark next to it -->
+            
+                {% if account.is_driver %}
+                <span class="text-black-50">Driver</span>
+                <span class="fa fa-check"></span>
+                {% endif %}
+            <span></span>
         </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+        </div>
+
+
+            <div class="col-md-5 border-right">
+                                <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Info</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">First Name</label><input type="text" name="first_name" class="form-control" placeholder="First Name" value="{{ account.first_name }}"></div>
+                        <div class="col-md-6"><label class="labels">Last Name</label><input type="text" name="last_name" class="form-control" placeholder="Last Name" value="{{ account.last_name }}"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Email</label><input type="text" name="email" class="form-control" placeholder="Enter email" value="{{ account.email }}"></div>
+                        <div class="col-md-12"><label class="labels">Password</label><input type="text" name="password" class="form-control" placeholder="Change password" value="{{ account.password }}"></div>
+                        {% if account.is_driver %}
+                            <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" name="phone" class="form-control" placeholder="Enter phone number" value="{{ account.phone }}"></div>
+                            <div class="col-md-12"><label class="labels">Vehicle Plate</label><input type="text" name="vehicle_plate" class="form-control" placeholder="Enter vehicle plate" value="{{ account.vehicle_plate }}"></div>
+                            
+                            <div class="col-md-12">
+                            <label for="vehicle_type">Vehicle Type</label>
+                            <select name="vehicle_type" class="form-control" aria-label=".form-select-sm example">
+                              <option selected="true" disabled="disabled">Select vehicle type</option>
+                              <option value="CM"
+                                {% if account.vehicle_type == 'CM' %}
+                                    selected
+                                {% endif %}
+                              >Compact</option>
+                              <option value="SU"
+                                {% if account.vehicle_type == 'SU' %}
+                                    selected
+                                {% endif %}
+                              >SUV</option>
+                              <option value="LX"
+                                {% if account.vehicle_type == 'LX' %}
+                                    selected
+                                {% endif %}
+                              >Luxury</option>
+                              <option value="MV"
+                                {% if account.vehicle_type == 'MV' %}
+                                    selected
+                                {% endif %}
+                              >Minivan</option>
+        
+                            </select>
+                            </div>
+
+                            <div class="col-md-12"><label class="labels">Vehicle Seats</label><input type="text" name="vehicle_seats" class="form-control" placeholder="Enter number of seats" value="{{ account.vehicle_seats }}"></div>
+                            <div class="col-md-12"><label class="labels">Driver License</label><input type="text" name="driver_license" class="form-control" placeholder="Enter driver license" value="{{ account.driver_license }}"></div>
+                        {% endif %}
+
+                    </div>
+                    <div class="mt-5 text-center">
+                        <!-- <button class="btn btn-primary profile-button" type="button">Save Profile</button> -->
+                        <input type="submit" value="Save profile" class="btn btn-secondary btn-block">
+                    </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-                    <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
-                    <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value=""></div>
-                    <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
-                </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
-            </div>
-        </div>
+        </form>
+
     </div>
 </div>
 </div>

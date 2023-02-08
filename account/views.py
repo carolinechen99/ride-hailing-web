@@ -78,7 +78,74 @@ def logout(request):
         return redirect('index')
 
 def profile(request):
-    return render(request, 'account/profile.html')
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            account = Account.objects.get(username=request.user.username)
+            context = {
+                'account': account
+            }
+            return render(request, 'account/profile.html', context)
+        else:
+            messages.error(request, 'You must be logged in to view your profile')
+            return redirect('account:login')
+    
+    if request.method == 'POST':
+        # Update user info using input from the form
+        # Get form values
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        vehicle_plate = request.POST.get('vehicle_plate')
+        vehicle_type = request.POST.get('vehicle_type')
+        vehicle_seats = request.POST.get('vehicle_seats')
+        driver_license = request.POST.get('driver_license')
+
+        # Get the user
+        account = Account.objects.get(username=request.user.username)
+        # Check if email is already in use by another user
+        if Account.objects.filter(email=email).exclude(username=request.user.username).exists():
+            messages.error(request, 'Email is already in use')
+            return redirect('account:profile')
+        else:
+            # Check if phone number is already in use by another user
+            if Account.objects.filter(phone=phone).exclude(username=request.user.username).exists():
+                messages.error(request, 'Phone number is already in use')
+                return redirect('account:profile')
+            else:
+                # Check if vehicle plate is already in use by another user
+                if Account.objects.filter(vehicle_plate=vehicle_plate).exclude(username=request.user.username).exists():
+                    messages.error(request, 'Vehicle plate is already in use')
+                    return redirect('account:profile')
+                else:
+                    # Check if driver license is already in use by another user
+                    if Account.objects.filter(driver_license=driver_license).exclude(username=request.user.username).exists():
+                        messages.error(request, 'Driver license is already in use')
+                        return redirect('account:profile')
+                    else:
+                        # Assign new values to the user
+                        user = User.objects.get(username=request.user.username)
+                        user.first_name = first_name
+                        user.last_name = last_name
+                        user.email = email
+                        user.save()
+
+                        # Assign new values to the user
+                        account.first_name = first_name
+                        account.last_name = last_name
+                        account.email = email
+                        account.phone = phone
+                        account.vehicle_plate = vehicle_plate
+                        account.vehicle_type = vehicle_type
+                        account.vehicle_seats = vehicle_seats
+                        account.driver_license = driver_license
+
+
+                        # Save the user
+                        account.save()
+                        messages.success(request, 'Your profile has been updated')
+                        return redirect('account:profile')
+
 
 def driver_register(request):
     if request.method == 'GET':
