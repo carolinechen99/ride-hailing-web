@@ -87,18 +87,20 @@ def ride_status(request):
 def driver_find_ride(request):
     # Get the driver(loggined user)'s vehicle type
     driver_vehicle_type = Account.objects.get(username=request.user.username).vehicle_type
+    driver_vehicle_seats = Account.objects.get(username=request.user.username).vehicle_seats
     # Get all open rides
-    # vehicle_type should be the same as the driver's vehicle type
-    query_list = Ride.objects.order_by('required_arrival_time').filter(status='OP', vehicle_type=driver_vehicle_type)
+    # vehicle_seats should be greater than or equal to the party size of the ride 
+    # driver_vehicle_type should be the same as the vehicle type of the ride or the vehicle type of the ride is null
+    query_list = Ride.objects.filter(status = 'OP', owner_party_size__lte=driver_vehicle_seats, vehicle_type__in=[driver_vehicle_type, None])
 
 
 
     # Filter by pickup location
-    ############################DEBUGGING:pickup_loc/pickup_location################################
-    if 'pickup_loc' in request.GET:
-        pickup_loc = request.GET['pickup_loc']
-        if pickup_loc:
-            query_list = query_list.filter(pickup_location__iexact=pickup_loc) 
+    ############################DEBUGGING:pickup-loc/pickup_location################################
+    if 'pickup-loc' in request.GET:
+        pickup = request.GET['pickup-loc']
+        if pickup:
+            query_list = query_list.filter(pickup_location__iexact=pickup) 
 
     # Filter by destination
     if 'destination' in request.GET:
@@ -107,8 +109,8 @@ def driver_find_ride(request):
             query_list = query_list.filter(destination__iexact=destination)
     
     # Filter by arrival time
-    if 'arr_time' in request.GET:
-        arr_time = request.GET['arr_time']
+    if 'arr-time' in request.GET:
+        arr_time = request.GET['arr-time']
         if arr_time:
             # if driver's arrival time is earlier than customer's arrival time, then the ride is not available
             query_list = query_list.filter(required_arrival_time__gte=arr_time)
