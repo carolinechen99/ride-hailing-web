@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lyber{% block title %}{% endblock %}</title>
 
+    
     <!-- Bootstrap CSS -->
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
 
-    
+  
 
     
 
@@ -70,9 +71,10 @@
           }
         </style>
     
-        
+    {% block extra_css %}
         <!-- Custom styles for this template -->
         <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
+        {% endblock %}
 
 
 </head>
