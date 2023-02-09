@@ -96,7 +96,8 @@ def driver_find_ride(request):
     # Get all open rides
     # vehicle_seats should be greater than or equal to the party size of the ride 
     # driver_vehicle_type should be the same as the vehicle type of the ride or the vehicle type of the ride is null
-    query_list = Ride.objects.filter(status = 'OP', owner_party_size__lte=driver_vehicle_seats).filter(Q(vehicle_type__iexact=driver_vehicle_type) | Q(vehicle_type__isnull=True))
+    # driver cannot be the owner of the ride
+    query_list = Ride.objects.filter(status = 'OP', owner_party_size__lte=driver_vehicle_seats).filter(Q(vehicle_type__iexact=driver_vehicle_type) | Q(vehicle_type__isnull=True)).filter(~Q(owner=request.user))
 
     # Filter by pickup location
     ############################DEBUGGING:pickup-loc/pickup_location################################
