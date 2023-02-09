@@ -140,7 +140,19 @@ def driver_ride_status(request, ride_rid):
             # change ride status to confirmed
             ride.status = 'CF'
             ride.save()
-            return render(request, 'ride/driver_ride_status.html')
+
+            # get rider's account
+            rider_account = Account.objects.get(username=ride.owner.username)
+
+            context = {
+                'ride': ride,
+                'rider_account': rider_account
+            }
+            
+            
+
+
+            return render(request, 'ride/driver_ride_status.html', context)
         else:
             messages.error(request, 'You must be logged in to view your ride status')
             return redirect('account:login')
