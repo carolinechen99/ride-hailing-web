@@ -21,3 +21,11 @@ To improve:
 
 Profile design:
  - Show drivers' info part only when is_driver is true
+
+Passing context object to HTML:
+- Naming of object keys should not use underscore '_', otherwise it can't be parsed correctly.
+
+Redirect with arguments:
+- Use the raw syntax 'return HttpResponseRedirect(reverse('ride:ride_status', args=(int(rid),)))'
+- sometimes the shortcut 'return redirect()' doesn't work well with arguments.
+- args should be iterable (so don't forget the comma , at the end)
