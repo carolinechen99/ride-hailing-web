@@ -77,12 +77,12 @@ def sharer(request):
 def ride_status(request, ride_rid):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            # ride = Ride.objects.filter(owner=request.user)[0]
+            all_rides = Ride.objects.filter(owner=request.user)
             ride = Ride.objects.get(rid=ride_rid)
             if ride.status == 'CF':
                 driver = Account.objects.get(username=ride.driver.username)
-                return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': driver})
-            return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': None})
+                return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': driver, 'all_rides': all_rides})
+            return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': None, 'all_rides': all_rides})
         else:
             messages.error(request, 'You must be logged in to view your ride status')
             return redirect('account:login')
