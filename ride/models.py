@@ -11,6 +11,7 @@ class Status(models.TextChoices):
         COMPLETED = 'CP', _('completed')
         CANCELLED = 'CL', _('cancelled')
 
+
 class CarType(models.TextChoices):
         COMPACT = 'CM', _('compact')
         SUV = 'SU', _('suv')
@@ -52,4 +53,5 @@ class Ride(models.Model):
 #     vehicle_type = models.CharField(max_length=2, choices=CarType.choices, default=CarType.COMPACT, blank=True)
 #     vehicle_seats = models.IntegerField(blank=True, null=True)
 #     driver_liscense = models.CharField(max_length=100, blank=True)
+
 

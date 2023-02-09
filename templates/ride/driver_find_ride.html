@@ -43,7 +43,7 @@
                     <i class="fas fa-clock"></i> Special request: {{ ride.special_requirements }}</div>
                 </div>
                 <hr>
-                <a href="{% url 'ride:driver_ride_status' %}" class="btn btn-primary btn-block">Confirm</a>
+                <a href="{% url 'ride:driver_ride_status' ride.rid %}" class="btn btn-primary btn-block">Confirm</a>
               </div>
             </div>
           </div>
