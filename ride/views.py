@@ -143,10 +143,26 @@ def driver_ride_status(request, ride_rid):
 
             # get rider's account
             rider_account = Account.objects.get(username=ride.owner.username)
+            # get sharers' accounts
+            sharer_accounts = []
+            if ride.allow_sharing:
+                if ride.sharers:
+                    # get sharers' accounts by username, sharer's username is the first element of the sharer tuple
+                    # example json data of sharers with only one sharer with username 'sharer1': [{"sharer1": 1}]
+                    for sharer in ride.sharers:
+                        sharer_accounts.append(Account.objects.get(username=sharer[0]))
+            
+            # create new array to store shares' username, first name and party size
+            sharers = []
+            for sharer in sharer_accounts:
+                sharers.append((sharer.username, sharer.first_name, sharer.party_size))
+
+
 
             context = {
                 'ride': ride,
-                'rider_account': rider_account
+                'rider_account': rider_account,
+                'sharers': sharers
             }
             
             
