@@ -10,7 +10,7 @@
         {% if rides %}
         {% for ride in rides %}
           <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card listing-preview">
+            <div class="card ride-preview">
               <!-- <img class="card-img-top" src="{{ ride.photo_main.url }}" alt=""> -->
 
               <!-- <div class="card-img-overlay">
@@ -20,7 +20,7 @@
               </div> -->
 
               <div class="card-body">
-                <div class="listing-heading text-center">
+                <div class="ride-heading text-center">
                   <h4 class="text-primary">Rider: {{ ride.owner}}</h4>
                   <p>
                     <i class="fas fa-map-marker text-secondary"></i> Arrival: {{ ride.required_arrival_time }} </p>

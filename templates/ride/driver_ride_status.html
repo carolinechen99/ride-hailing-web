@@ -17,11 +17,9 @@
   <!-- Listing -->
   <section id="listing" class="py-4">
     <div class="container">
-      <a href="{% url 'ride:driver_find_ride' %}" class="btn btn-light mb-4">Back To Search Page</a>
+      <a href="{% url 'ride:driver' %}" class="btn btn-light mb-4">Back To Search Page</a>
       <div class="row">
         <div class="col-md-9">
-          <!-- Home Main Image -->
-          <img src="{{ listing.photo_main.url }}" alt="" class="img-main img-fluid mb-3">
           <!-- Thumbnails -->
           <div class="row mb-5 thumbs">
             {% if listing.photo_1 %}
