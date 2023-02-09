@@ -1,160 +1,177 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.108.0">
-    <title>Cheatsheet · Bootstrap v5.3</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.108.0">
+  <title>Ride Status</title>
 
-    
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
 
-    
 
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
+
+
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
       }
+    }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
+    .b-example-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
 
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
 
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
 
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
 
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/cheatsheet.css' %}" rel="stylesheet">
-  </head>
-  <body class="bg-light">
-    
-<!-- Navigation -->
-{% include 'partials/_nav.html' %}
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
 
 
-<div class="bd-cheatsheet container-fluid bg-body">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/cheatsheet.css' %}" rel="stylesheet">
+</head>
 
-  <section id="Status">
-    <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Ride Status</h2>
+<body class="bg-light">
 
-    <article class="my-3" id="spinners">
-      <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-        <h3>Where's my ride</h3>
-      </div>
+  <!-- Navigation -->
+  {% include 'partials/_nav.html' %}
 
-      <div>
-        <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-        
-        
-        <div class="spinner-border text-dark" role="status">
-          <span class="visually-hidden">Loading...</span>
+
+  <div class="bd-cheatsheet container-fluid bg-body">
+
+    <section id="Status">
+      <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Ride Status</h2>
+
+      <article class="my-3" id="spinners">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+          <h3>Where's my ride</h3>
         </div>
-        <p class="lead">Searching for drivers...</p>
-        </div></div>
+        {% if not driver %}
+        <div>
+          <div class="bd-example-snippet bd-code-snippet">
+            <div class="bd-example">
+              <div class="spinner-border text-dark" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="lead">Searching for drivers...</p>
+              <p>Refreshing the page regularly to get latest driver search result</p>
 
-        
-
-
-      </div>
-    </article>
-  </section>
-  <section id="forms">
-    <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Forms</h2>
-
-    <article class="my-3" id="overview">
-      <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-        <h3>Overview</h3>
-        <a class="d-flex align-items-center" href="../forms/overview/">Documentation</a>
-      </div>
-
-      <div>
-        <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-          <!-- <p class="lead">{{ride.allow_sharing}}</p> -->
-        <form>
-          <fieldset disabled aria-label="Disabled fieldset example">
-          <div class="mb-3">
-            <label for="pickup-loc" class="form-label">Pickup</label>
-            <input name="pickup-loc" type="text" class="form-control form-control-sm" id="pickup-loc" value="{{ride.pickup_location}}" required>
-            <div class="invalid-feedback">
-              Please enter your pickup location.
             </div>
           </div>
-          <div class="mb-3">
-            <label for="destination" class="form-label">Drop-off</label>
-            <input name="destination" type="text" class="form-control form-control-sm" id="destination" value="{{ride.destination}}" required>
-            <div class="invalid-feedback">
-              Please enter your destination.
-            </div>
+        </div>
+        {% else %}
+        <div class="bd-example-snippet bd-code-snippet">
+          <div class="bd-example">
+            <p class="lead">Driver on their way ... </p>
+            <h6>Driver Name: {{driver.first_name}} {{driver.last_name}}</h6>
+            <h6>Driver Phone: {{driver.phone}}</h6>
+            <h6>Vehicle Plate: {{driver.vehicle_plate}} </h6>
+            <h6>Vehicle Type: {{driver.vehicle_type}} </h6>
+            <h6>Vehicle Seats: {{driver.vehicle_seats}} </h6>
+
           </div>
-          <div class="mb-3">
-            <label for="arr-time" class="form-label">Required arrival time</label>
-            <input name="arr-time" type="datetime" class="form-control form-control-sm" id="arr-time" value="{{ride.required_arrival_time}}" placeholder="{{ride.required_arrival_time}}" required>
-            <div class="invalid-feedback">
-              Your arrival date/time is required.
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="party-size" class="form-label">Number of Passengers</label>
-            <input name="party-size" type="number" class="form-control form-control-sm" id="party-size" value="{{ride.owner_party_size}}" required>
-            <div class="invalid-feedback">
-              Please enter a valid number for your party's size.
-            </div>
-          </div>
-          
-          <!-- <div class="mb-3 form-check form-switch">
+        </div>
+        {% endif %}
+      </article>
+    </section>
+    <section id="forms">
+      <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Forms</h2>
+
+      <article class="my-3" id="overview">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+          <h3>Overview</h3>
+        </div>
+
+        <div>
+          <div class="bd-example-snippet bd-code-snippet">
+            <div class="bd-example">
+              <!-- <p class="lead">{{ride.allow_sharing}}</p> -->
+              <form>
+                <fieldset disabled aria-label="Disabled fieldset example">
+                  <div class="mb-3">
+                    <label for="pickup-loc" class="form-label">Pickup</label>
+                    <input name="pickup-loc" type="text" class="form-control form-control-sm" id="pickup-loc"
+                      value="{{ride.pickup_location}}" required>
+                    <div class="invalid-feedback">
+                      Please enter your pickup location.
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="destination" class="form-label">Drop-off</label>
+                    <input name="destination" type="text" class="form-control form-control-sm" id="destination"
+                      value="{{ride.destination}}" required>
+                    <div class="invalid-feedback">
+                      Please enter your destination.
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="arr-time" class="form-label">Required arrival time</label>
+                    <input name="arr-time" type="datetime" class="form-control form-control-sm" id="arr-time"
+                      value="{{ride.required_arrival_time}}" placeholder="{{ride.required_arrival_time}}" required>
+                    <div class="invalid-feedback">
+                      Your arrival date/time is required.
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="party-size" class="form-label">Number of Passengers</label>
+                    <input name="party-size" type="number" class="form-control form-control-sm" id="party-size"
+                      value="{{ride.owner_party_size}}" required>
+                    <div class="invalid-feedback">
+                      Please enter a valid number for your party's size.
+                    </div>
+                  </div>
+
+                  <!-- <div class="mb-3 form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"  checked="{{ride.allow_sharing}}">
             <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
           </div>         -->
-          
-          <!-- <div class="mb-3">
+
+                  <!-- <div class="mb-3">
             <label for="exampleSelect" class="form-label">Select menu</label>
             <select class="form-select form-select-sm" id="exampleSelect">
               <option value="CM">Compact</option>
@@ -164,97 +181,105 @@
             </select>
           </div> -->
 
-          <div class="mb-3">
-            <label for="special" class="form-label">Special Request <span class="text-muted">(Optional)</span></label>
-            <textarea name="special" class="form-control form-control-sm" id="special" rows="3" value="{{ride.special_requirements}}"></textarea>
-          </div>
+                  <div class="mb-3">
+                    <label for="special" class="form-label">Special Request <span
+                        class="text-muted">(Optional)</span></label>
+                    <textarea name="special" class="form-control form-control-sm" id="special" rows="3"
+                      value="{{ride.special_requirements}}"></textarea>
+                  </div>
 
-          <input class="btn btn-primary" type="submit"></input>
-          </fieldset>
+                  <input class="btn btn-primary" type="submit"></input>
+                </fieldset>
 
-          
-    </article>
-    
-  </section>
 
-</div>
+      </article>
 
-<div class="modal fade" id="exampleModalDefault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+    </section>
+
+  </div>
+
+  <div class="modal fade" id="exampleModalDefault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="modal fade" id="staticBackdropLive" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLiveLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>I will not close if you click outside me. Don't even try to press escape key.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalCenteredScrollableTitle">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>This is some placeholder content to show the scrolling behavior for modals. We use repeated line breaks to demonstrate how content can exceed minimum inner height, thereby showing inner scrolling. When content becomes longer than the predefined max-height of modal, content will be cropped and scrollable within the modal.</p>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <p>This content should appear at the bottom after you scroll.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+  <div class="modal fade" id="staticBackdropLive" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLiveLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>I will not close if you click outside me. Don't even try to press escape key.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="modal fade" id="exampleModalFullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">Full screen modal</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+    aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalCenteredScrollableTitle">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>This is some placeholder content to show the scrolling behavior for modals. We use repeated line breaks to
+            demonstrate how content can exceed minimum inner height, thereby showing inner scrolling. When content
+            becomes longer than the predefined max-height of modal, content will be cropped and scrollable within the
+            modal.</p>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          <p>This content should appear at the bottom after you scroll.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <div class="modal fade" id="exampleModalFullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">Full screen modal</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-      <script src="{% static 'js/cheatsheet.js' %}"></script>
-  </body>
-  <!-- Footer -->
-  {% include 'partials/_footer.html' %}
+  <script src="{% static 'js/cheatsheet.js' %}"></script>
+</body>
+<!-- Footer -->
+{% include 'partials/_footer.html' %}
 
 </html>
