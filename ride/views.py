@@ -66,18 +66,21 @@ def driver(request):
         
 
 
-def sharer(request):
+def sharer_request(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return render(request, 'ride/sharer.html')
+            return render(request, 'ride/sharer_request.html')
         else:
             messages.error(request, 'You must be logged in to share a ride')
             return redirect('account:login')
 
+
+
+
 def ride_status(request, ride_rid):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            all_rides = Ride.objects.filter(owner=request.user)
+            all_rides = Ride.objects.filter(owner=request.user).exclude(status='CP').exclude(status='CL')
             ride = Ride.objects.get(rid=ride_rid)
             if ride.status == 'CF':
                 driver = Account.objects.get(username=ride.driver.username)
@@ -88,6 +91,11 @@ def ride_status(request, ride_rid):
             return redirect('account:login')
     # if request.method == 'POST':
     #     return render(request, 'ride/ride_status.html')
+
+
+
+
+
 
 def driver_find_ride(request):
     # Get the driver(loggined user)'s vehicle type
