@@ -175,4 +175,8 @@ def driver_ride_status(request, ride_rid):
             return redirect('account:login')
             
     if request.method == 'POST':
+        # retrieve the ride using ride_rid get
+        ride = Ride.objects.get(rid=ride_rid)
+        # change ride status to completed
+        ride.status = 'CP'
         return render(request, 'ride/driver_ride_status.html')
