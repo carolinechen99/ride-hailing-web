@@ -14,8 +14,6 @@
   <div class="row g-5">
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3">Ride specifics</h4>
-      <!-- Alerts -->
-      {% include 'partials/_alerts.html' %}
       <form action="{% url 'ride:sharer_request'  %}" method="POST">
         {% csrf_token %}
         <fieldset>

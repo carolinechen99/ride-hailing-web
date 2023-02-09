@@ -38,7 +38,6 @@ def request_ride(request):
         r = Ride(owner = owner, owner_party_size = party_size, required_arrival_time = arr_time, pickup_location = pickup_location, destination = destination, allow_sharing = allow_sharing,  special_requirements = special)
         r.save()
         messages.success(request, 'Your ride request has been submitted')
-        print(r.rid)
         return HttpResponseRedirect(reverse('ride:ride_status', args=(r.rid,)))
     else:
         return redirect('account:login')
@@ -79,7 +78,8 @@ def sharer_request(request):
         destination = request.POST.get('destination')
         start_window = request.POST.get('start-window')
         end_window = request.POST.get('end-window')
-        party_size = request.POST.get('party-size')
+        party_size = int(request.POST.get('party-size'))
+        print("line 82, party size: ", party_size)
 
         # get a list of all rides that has the same destination
         # and the required arrival time is within the start and end window
@@ -115,14 +115,39 @@ def sharer_request(request):
         if not query_list:
             messages.error(request, 'No ride is available')
             return redirect('ride:sharer_request')
-        # ride.sharers.append({'s_username': request.user.username, 'party_size': party_size})
+
+        context = {
+            'rides': query_list,
+            'party': str(party_size) # keep the party size to use later
+        }
+        print("line 123, shared_party: ", context['party'])
+
+        return render(request, 'ride/sharer_select.html', context)
+    
 
 
-        return redirect('ride:sharer_select', rides=query_list)
+def sharer_select(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            messages.error(request, 'You must be sending a share request to access this page')
+            return render(request, 'ride/sharer_request.html')
+        else:
+            messages.error(request, 'You must be logged in to share a ride')
+            return redirect('account:login')
+    if request.method == 'POST':
+        rid = request.POST.get('rid')
+        party_size = request.POST.get('party-size')
+        print("line 140, party size: ", party_size)
+        ride = Ride.objects.get(rid=rid)
+        if not ride.sharers:
+            ride.sharers = []
+        ride.sharers.append({'s_username': request.user.username, 'party_size': int(party_size)})
+        ride.save()
+        return HttpResponseRedirect(reverse('ride:ride_status', args=(int(rid),)))
+    
+    
 
-
-def sharer_select(request, rides):
-    return render(request, 'ride/sharer_select.html', {'rides': rides})
+    
 
 
 def ride_status(request, ride_rid):

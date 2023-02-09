@@ -21,7 +21,7 @@
 
               <div class="card-body">
                 <div class="ride-heading text-center">
-                  <h4 class="text-primary">Rider: {{ ride.owner}}</h4>
+                  <h4 class="text-primary">Destination: {{ ride.destination}}</h4>
                   <p>
                     <i class="fas fa-map-marker text-secondary"></i> Arrival: {{ ride.required_arrival_time }} </p>
                 </div>
@@ -29,22 +29,33 @@
                 <p>(for debugging) Ride ID: {{ride.rid}}</p>
                 <div class="row py-2 text-secondary">
                   <div class="col-12">
-                    <i class="fas fa-th-large"></i>Passengers: {{ ride.owner_party_size}}</div> 
+                    <i class="fas fa-th-large"></i>Ride owner #passengers: {{ ride.owner_party_size}}</div> 
                 </div>
                 <div class="row py-2 text-secondary">
                   <div class="col-12">
-                    <i class="fas fa-bed"></i> Drop-off :{{ ride.destination }}</div>
-                </div>
-                <div class="row py-2 text-secondary">
-                  <div class="col-12">
-                    <i class="fas fa-user"></i> Pickup: {{ ride.pickup_location }}</div>
+                    <i class="fas fa-user"></i> Pickup ride owner: {{ ride.pickup_location }}</div>
                 </div>
                 <div class="row text-secondary pb-2">
                   <div class="col-20">
-                    <i class="fas fa-clock"></i> Special request: {{ ride.special_requirements }}</div>
+                    <i class="fas fa-clock"></i> Vehicle Choice:  
+                    {% if ride.vehicle_type %}
+                    {{ ride.vehicle_type }}
+                    {% else %}
+                    Not specified
+                    {% endif %}
+                  
+                  </div>
                 </div>
                 <hr>
-                <a href="{% url 'ride:driver_ride_status' ride.rid %}" class="btn btn-primary btn-block">Confirm</a>
+
+                <form action="{% url 'ride:sharer_select' %}" method="POST">
+                  {% csrf_token %}
+                  <p>{{party}}</p>
+                  <input type="hidden" name="party-size" value="{{ party }}">
+                  <input type="number" style="display:none" name="rid" value="{{ ride.rid }}">
+                  <input class="w-100 btn btn-primary btn-lg" type="submit" value="Join"></input>
+                </form>
+
               </div>
             </div>
           </div>
@@ -54,7 +65,7 @@
       <div class="col-md-12">
         <p>No rides available</p>
         <!-- Click button to return to driver.html-->
-        <a href="{% url 'ride:driver' %}" class="btn btn-primary btn-block">Return to search page</a>
+        <a href="{% url 'ride:sharer_request' %}" class="btn btn-primary btn-block">Return to search page</a>
       </div>
       {% endif %}
 
