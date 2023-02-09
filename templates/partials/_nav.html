@@ -21,13 +21,15 @@
 
           <li>
           <a
-          {% if 'sharer' in request.path %} 
+          {% if 'sharer_request' in request.path %} 
             class="nav-link active" 
           {% else %} 
             class="nav-link" 
           {% endif %}
            href="{% url 'ride:sharer_request' %}">Sharer</a>
         </li>
+
+
 
         <li>
           <a
@@ -38,6 +40,8 @@
           {% endif %}
            href="{% url 'ride:driver' %}">Driver</a>
         </li>
+
+        
 
         </ul>
         <!-- Register & Login-->

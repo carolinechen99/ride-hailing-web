@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect,render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 # Import models
 from .models import Ride
 from account.models import Account
@@ -37,7 +38,8 @@ def request_ride(request):
         r = Ride(owner = owner, owner_party_size = party_size, required_arrival_time = arr_time, pickup_location = pickup_location, destination = destination, allow_sharing = allow_sharing,  special_requirements = special)
         r.save()
         messages.success(request, 'Your ride request has been submitted')
-        return redirect('ride:ride_status', rid=str(r.rid))
+        print(r.rid)
+        return HttpResponseRedirect(reverse('ride:ride_status', args=(r.rid,)))
     else:
         return redirect('account:login')
 
@@ -73,8 +75,54 @@ def sharer_request(request):
         else:
             messages.error(request, 'You must be logged in to share a ride')
             return redirect('account:login')
+    if request.method == 'POST':
+        destination = request.POST.get('destination')
+        start_window = request.POST.get('start-window')
+        end_window = request.POST.get('end-window')
+        party_size = request.POST.get('party-size')
+
+        # get a list of all rides that has the same destination
+        # and the required arrival time is within the start and end window
+        # and the ride is open
+        # and the ride is not the user's own ride
+        # and the ride is sharing allowed
+        query_list = Ride.objects.filter(destination=destination).filter(required_arrival_time__gte=start_window).filter(required_arrival_time__lte=end_window).filter(status='OP').exclude(owner=request.user).filter(allow_sharing=True)
+
+        # check owner party size and subtract vehicle capacity to get available space
+        for ride in query_list:
+            # if the ride already have sharers, add up the party size of all sharers
+            current_sharer_size = 0
+            if ride.sharers:
+                for sharer in ride.sharers:
+                    current_sharer_size += sharer['party_size']
+            # calculate the number of current riders
+            curr_riders = ride.owner_party_size + current_sharer_size
+
+            # set the overall limit of the ride
+            if ride.vehicle_type:
+                limit = 7 if ride.vehicle_type == 'MV' else 4
+            else:
+                limit = 4
+
+            # calculate the available space
+            available_space = limit - curr_riders
+
+            # if the available space is less than the party size, remove the ride from the list
+            if available_space < party_size:
+                query_list = query_list.exclude(rid=ride.rid)       
+
+        # if there is no ride that matches the criteria, return an error message
+        if not query_list:
+            messages.error(request, 'No ride is available')
+            return redirect('ride:sharer_request')
+        # ride.sharers.append({'s_username': request.user.username, 'party_size': party_size})
 
 
+        return redirect('ride:sharer_select', rides=query_list)
+
+
+def sharer_select(request, rides):
+    return render(request, 'ride/sharer_select.html', {'rides': rides})
 
 
 def ride_status(request, ride_rid):

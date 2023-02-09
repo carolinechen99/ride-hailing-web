@@ -14,7 +14,7 @@
   <div class="row g-5">
     <div class="col-md-7 col-lg-8">
       <h4 class="mb-3">Ride specifics</h4>
-      <form  action="{% url 'ride:request_ride'  %}" method="POST">
+      <form  action="{% url 'ride:request_ride' %}" method="POST">
         {% csrf_token %}
         <fieldset>
         <div class="row g-3">
