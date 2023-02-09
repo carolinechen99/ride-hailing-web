@@ -1,103 +1,103 @@
 <!-- Navigation -->
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'index' %}">Lyber</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-
-            <li>
-              <a
-              {% if 'request_ride' in request.path %} 
-                class="nav-link active" 
-              {% else %} 
-                class="nav-link" 
-              {% endif %}
-               href="{% url 'ride:request_ride' %}">Rider</a>
-            </li>
-
-            <li>
-            <a
-            {% if 'sharer' in request.path %} 
-              class="nav-link active" 
-            {% else %} 
-              class="nav-link" 
-            {% endif %}
-             href="{% url 'ride:sharer' %}">Sharer</a>
-          </li>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">Lyber</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
 
           <li>
             <a
-            {% if 'driver' in request.path %} 
+            {% if 'request_ride' in request.path %} 
               class="nav-link active" 
             {% else %} 
               class="nav-link" 
             {% endif %}
-             href="{% url 'ride:driver' %}">Driver</a>
+             href="{% url 'ride:request_ride' %}">Rider</a>
           </li>
 
-          </ul>
-          <!-- Register & Login-->
-          <ul class="navbar-nav ml-auto">
-            <!-- if user is not authenticated-->
-            {% if user.is_authenticated %}
-              <!-- Profile -->
-              <li 
-              {% if 'profile' == request.path %} 
-              class="nav-item active mr-3" 
-              {% else %} 
-              class="nav-item mr-3" 
-              {% endif %}
-              >
-                <a class="nav-link" href="{% url 'account:profile' %}">
-                  Welcome {{ user.first_name }}</a>
-              </li>
-              <!-- Logout -->
-              <li class="nav-item mr-3">
-                <a href="javascript:{document.getElementById('logout').submit()}"
-                class="nav-link">
-                  <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-                <form id="logout" action="{% url 'account:logout' %}" method="POST">
-                  {% csrf_token %}
-                  <input type="hidden">
-                </form>
-              </li>
+          <li>
+          <a
+          {% if 'sharer' in request.path %} 
+            class="nav-link active" 
+          {% else %} 
+            class="nav-link" 
+          {% endif %}
+           href="{% url 'ride:sharer_request' %}">Sharer</a>
+        </li>
 
-            {% else %}
-              <li 
-              {% if 'account:register' == request.path %} 
-              class="nav-item active mr-3" 
-              {% else %} 
-              class="nav-item mr-3" 
-              {% endif %}
-              >
-                <a class="nav-link" href="{% url 'account:register' %}">
-                  <i class="fas fa-user-plus"></i> Register</a>
-              </li>
-              <li 
-              {% if 'account:login' == request.path %} 
-              class="nav-item active mr-3" 
+        <li>
+          <a
+          {% if 'driver' in request.path %} 
+            class="nav-link active" 
+          {% else %} 
+            class="nav-link" 
+          {% endif %}
+           href="{% url 'ride:driver' %}">Driver</a>
+        </li>
+
+        </ul>
+        <!-- Register & Login-->
+        <ul class="navbar-nav ml-auto">
+          <!-- if user is not authenticated-->
+          {% if user.is_authenticated %}
+            <!-- Profile -->
+            <li 
+            {% if 'profile' in request.path %} 
+            class="nav-item active mr-3" 
             {% else %} 
-              class="nav-item mr-3" 
+            class="nav-item mr-3" 
             {% endif %}
-              >
-                <a class="nav-link" href="{% url 'account:login' %}">
-                  <i class="fas fa-sign-in-alt"></i>
-      
-                  Login</a>
-              </li>
+            >
+              <a class="nav-link" href="{% url 'account:profile' %}">
+                Welcome {{ user.first_name }}</a>
+            </li>
+            <!-- Logout -->
+            <li class="nav-item mr-3">
+              <a href="javascript:{document.getElementById('logout').submit()}"
+              class="nav-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+              <form id="logout" action="{% url 'account:logout' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden">
+              </form>
+            </li>
+
+          {% else %}
+            <li 
+            {% if 'account:register' in request.path %} 
+            class="nav-item active mr-3" 
+            {% else %} 
+            class="nav-item mr-3" 
             {% endif %}
-          </ul>
-          
-          <!-- <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form> -->
-        </div>
+            >
+              <a class="nav-link" href="{% url 'account:register' %}">
+                <i class="fas fa-user-plus"></i> Register</a>
+            </li>
+            <li 
+            {% if 'account:login' in request.path %} 
+            class="nav-item active mr-3" 
+          {% else %} 
+            class="nav-item mr-3" 
+          {% endif %}
+            >
+              <a class="nav-link" href="{% url 'account:login' %}">
+                <i class="fas fa-sign-in-alt"></i>
+    
+                Login</a>
+            </li>
+          {% endif %}
+        </ul>
+        
+        <!-- <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
       </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
+</header>
