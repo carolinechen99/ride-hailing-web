@@ -14,10 +14,20 @@
     </div>
   </section>
 
-  <!-- Listing -->
+
+
+  <!-- Driver Ride Status -->
   <section id="listing" class="py-4">
     <div class="container">
-      <a href="{% url 'ride:driver' %}" method="POST" class="btn btn-light mb-4" >Complete ride</a>
+              <!--alterts-->
+  {% include 'partials/_alerts.html' %}
+      <!-- <a href="{% url 'ride:driver_ride_status' ride.rid%}" method="POST" class="btn btn-light mb-4" >Complete ride</a> -->
+      <!-- change above code commentedout to a form with only one button "Complete ride"-->
+      <form action="{% url 'ride:driver_ride_status' ride.rid%}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-light mb-4">Complete ride</button>
+      </form>
+
       <div class="row">
         <div class="col-md-9">
 

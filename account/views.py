@@ -143,11 +143,11 @@ def profile(request):
                             account.vehicle_seats = 4
                         account.driver_license = driver_license
 
-
                         # Save the user
                         account.save()
                         messages.success(request, 'Your profile has been updated')
                         return redirect('account:profile')
+    
 
 
 def driver_register(request):
@@ -206,3 +206,31 @@ def driver_register(request):
     else:
         return render(request, 'account/driver_register.html')
 
+def delete_driver_account (request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            #get the user account (invalid account already checked at driver function)
+            account = Account.objects.get(username=request.user.username)
+            #check if the user is already a driver
+            if account.is_driver:
+                return render(request, 'account/delete_driver_account.html')
+            else:
+                messages.error(request, 'You are no longer registered as a driver')
+                return redirect('account:profile')
+        else:
+            messages.error(request, 'You must be logged in to delete your driver account')
+            return redirect('account:login')
+
+    if request.method == 'POST':
+        # Get the user
+        d_account = Account.objects.get(username=request.user.username)
+        # remove phone, vehicle_plate, vehicle_type, driver_license, vehicle_seats, set is_driver to false
+        d_account.phone = ''
+        d_account.vehicle_plate = ''
+        d_account.vehicle_type = ''
+        d_account.driver_license = ''
+        d_account.vehicle_seats = None
+        d_account.is_driver = False
+        d_account.save()
+        messages.success(request, 'You are no longer registered as a driver')
+        return redirect('account:profile')

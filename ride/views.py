@@ -38,6 +38,7 @@ def request_ride(request):
         r.save()
         messages.success(request, 'Your ride request has been submitted')
         return redirect('ride:ride_status', rid=str(r.rid))
+
     else:
         return redirect('account:login')
 
@@ -174,9 +175,6 @@ def driver_ride_status(request, ride_rid):
                 'sharers': sharers
             }
             
-            
-
-
             return render(request, 'ride/driver_ride_status.html', context)
         else:
             messages.error(request, 'You must be logged in to view your ride status')
@@ -187,4 +185,8 @@ def driver_ride_status(request, ride_rid):
         ride = Ride.objects.get(rid=ride_rid)
         # change ride status to completed
         ride.status = 'CP'
-        return render(request, 'ride/driver_ride_status.html')
+        ride.save()
+        messages.success(request, 'Your ride has been completed')
+
+        # redirect to driver page
+        return redirect('ride:driver') 

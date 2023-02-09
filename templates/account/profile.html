@@ -13,8 +13,11 @@
             <!--If get account tableis_driver is true, show text"Driver" with a check mark next to it -->
             
                 {% if account.is_driver %}
-                <span class="text-black-50">Driver</span>
-                <span class="fa fa-check"></span>
+                <a href="{% url 'account:delete_driver_account' %}" class="btn btn-primary btn-block">Driver opt out</a>
+                <!-- <span class="text-black-50">Driver</span> -->
+                <!-- <span class="fa fa-check"></span> -->
+                {% else %}
+                <a href="{% url 'account:driver_register' %}" class="btn btn-primary btn-block">Become a driver</a>
                 {% endif %}
             <span></span>
         </div>
@@ -67,7 +70,7 @@
                             </select>
                             </div>
 
-                            <div class="col-md-12"><label class="labels">Vehicle Seats</label><input type="text" name="vehicle_seats" class="form-control" placeholder="Enter number of seats" value="{{ account.vehicle_seats }}"></div>
+                            <!-- <div class="col-md-12"><label class="labels">Vehicle Seats</label><input type="text" name="vehicle_seats" class="form-control" placeholder="Enter number of seats" value="{{ account.vehicle_seats }}"></div> -->
                             <div class="col-md-12"><label class="labels">Driver License</label><input type="text" name="driver_license" class="form-control" placeholder="Enter driver license" value="{{ account.driver_license }}"></div>
                         {% endif %}
 

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_alerts.html' %}
+<!--Have window in the center of the page displaying message "Are you sure to delete the account?"
+    Two buttons: Yes and No
+    If Yes, delete the account and redirect to the profile page
+    If No, redirect to the profile page
+    use the form to send the request to the backend, url: account:delete_driver_account
+-->
+
+<div class="modal modal-alert position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalChoice">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-3 shadow">
+        <div class="modal-body p-4 text-center">
+          <h5 class="mb-0">Are you sure to delete this account?</h5>
+          <p class="mb-0">     </p>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <a href="{% url 'account:profile' %}" button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"><strong>No</strong></button>
+            </a>
+            <form action="{% url 'account:delete_driver_account' %}" method="POST">
+                {% csrf_token %}
+          <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal">Yes</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+{% endblock %}
