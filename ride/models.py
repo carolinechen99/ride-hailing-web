@@ -11,6 +11,7 @@ class Status(models.TextChoices):
         COMPLETED = 'CP', _('completed')
         CANCELLED = 'CL', _('cancelled')
 
+
 class CarType(models.TextChoices):
         COMPACT = 'CM', _('compact')
         SUV = 'SU', _('suv')
@@ -31,7 +32,7 @@ class Ride(models.Model):
     status = models.CharField( max_length=2, choices=Status.choices, default=Status.OPEN)
     allow_sharing = models.BooleanField()
     special_requirements = models.CharField(max_length=100, blank=True)
-    vehicle_type = models.CharField(max_length=2, choices=CarType.choices, default=CarType.COMPACT)
+    vehicle_type = models.CharField(max_length=2, choices=CarType.choices, null=True)#######DEBUG: change to default=CarType.COMPACT to test
 
     def __str__(self):
         return self.rid
@@ -52,4 +53,5 @@ class Ride(models.Model):
 #     vehicle_type = models.CharField(max_length=2, choices=CarType.choices, default=CarType.COMPACT, blank=True)
 #     vehicle_seats = models.IntegerField(blank=True, null=True)
 #     driver_liscense = models.CharField(max_length=100, blank=True)
+
 

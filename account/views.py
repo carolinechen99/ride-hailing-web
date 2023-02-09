@@ -137,7 +137,10 @@ def profile(request):
                         account.phone = phone
                         account.vehicle_plate = vehicle_plate
                         account.vehicle_type = vehicle_type
-                        account.vehicle_seats = vehicle_seats
+                        if account.vehicle_type == 'MV':
+                            account.vehicle_seats = 7
+                        else:
+                            account.vehicle_seats = 4
                         account.driver_license = driver_license
 
 
@@ -162,14 +165,11 @@ def driver_register(request):
             messages.error(request, 'You must be logged in to register as a driver')
             return redirect('account:login')
 
-
-
     if request.method == 'POST':
         # Get form values
         phone = request.POST.get('phone')
         vehicle_plate = request.POST.get('vehicle_plate')
         vehicle_type = request.POST.get('vehicle_type')
-        vehicle_seats = request.POST.get('vehicle_seats')
         driver_license = request.POST.get('driver_license')
 
         # Get the user
@@ -193,9 +193,13 @@ def driver_register(request):
                     d_account.phone = phone
                     d_account.vehicle_plate = vehicle_plate
                     d_account.vehicle_type = vehicle_type
-                    d_account.vehicle_seats = vehicle_seats
                     d_account.driver_license = driver_license
+                    if d_account.vehicle_type == 'MV':
+                        d_account.vehicle_seats = 7
+                    else:
+                        d_account.vehicle_seats = 4
                     d_account.is_driver = True
+                    # If vehicle type is minivan, vehicle seats = 7, else seats = 4
                     d_account.save()
                     messages.success(request, 'You are now registered as a driver')
                     return redirect('ride:driver')
