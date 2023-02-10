@@ -157,17 +157,35 @@ def ride_status(request, ride_rid):
             all_rides = Ride.objects.filter(owner=request.user).exclude(
                 status='CP').exclude(status='CL')
             # Get all rides that the user is a sharer
-
             sharer_rides = Ride.objects.filter(sharers_username__contains=[
                                                request.user.username]).exclude(status='CP').exclude(status='CL')
-
             all_rides = all_rides | sharer_rides
+            
+            # get sharers' accounts
+            sharer_accounts = []
+            if ride.allow_sharing:
+                if ride.sharers_username:
+                    # get sharers' accounts by username, sharer's username is the first element of the sharer tuple
+                    # example json data of sharers with only one sharer with username 'sharer1': [{"sharer1": 1}]
+                    for usrn in ride.sharers_username:
+                        sharer_accounts.append(
+                            Account.objects.get(username=usrn))
+            # Get the sharers
+            # create new array to store shares' username, first name and party size
+            sharers = []
+            for (sharer, party) in zip(sharer_accounts, ride.sharers_party_size):
+                new = {'username': sharer.username,
+                       'firstname': sharer.first_name,
+                       'party': party}
+
+                sharers.append(new)
+                
             # Get the ride that the user is looking for
             ride = Ride.objects.get(rid=ride_rid)
             if ride.status == 'CF':
                 driver = Account.objects.get(username=ride.driver.username)
-                return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': driver, 'all_rides': all_rides})
-            return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': None, 'all_rides': all_rides})
+                return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': driver, 'all_rides': all_rides, 'sharers': sharers})
+            return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': None, 'all_rides': all_rides, 'sharers': sharers})
         else:
             messages.error(
                 request, 'You must be logged in to view your ride status')

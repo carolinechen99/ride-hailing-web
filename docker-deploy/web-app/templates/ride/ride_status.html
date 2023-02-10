@@ -122,37 +122,51 @@
         {% endif %}
       </article>
 
+      {% if ride.allow_sharing %}
       <article class="my-3" id="spinners">
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
           <h3>Sharers Info</h3>
         </div>
-        {% if not driver %}
+        {% if sharers %}
+            {% for sharer in sharers %}
+                <!--disply sharers' username, firstname, and party size -->
+                <div class="col-md-4">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-secondary">
+                      <i class="fas fa-th-large"></i> Sharer Username:
+                      <span class="float-right">{{ sharer.username }} </span>
+                    </li>
+    
+                    <li class="list-group-item text-secondary">
+                      <i class="fas fa-calendar"></i> Sharer First Name:
+                      <span class="float-right">{{ sharer.firstname }}</span>
+                    </li>
+    
+                    <li class="list-group-item text-secondary">
+                        <i class="fas fa-calendar"></i> Sharer Party Size:
+                        <span class="float-right">{{ sharer.party }}</span>
+                      </li> 
+                  </ul>
+                </div>
+
+            {% endfor %}
+        {% else %}
+
         <div>
           <div class="bd-example-snippet bd-code-snippet">
             <div class="bd-example">
               <div class="spinner-border text-dark" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
-              <p class="lead">Searching for drivers...</p>
-              <p>Refreshing the page regularly to get latest driver search result</p>
+              <p class="lead">Currently No Sharers</p>
+              <p>Refreshing the page regularly to get latest sharer info</p>
 
             </div>
           </div>
         </div>
-        {% else %}
-        <div class="bd-example-snippet bd-code-snippet">
-          <div class="bd-example">
-            <p class="lead">Driver on their way ... </p>
-            <h6>Driver Name: {{driver.first_name}} {{driver.last_name}}</h6>
-            <h6>Driver Phone: {{driver.phone}}</h6>
-            <h6>Vehicle Plate: {{driver.vehicle_plate}} </h6>
-            <h6>Vehicle Type: {{driver.vehicle_type}} </h6>
-            <h6>Vehicle Seats: {{driver.vehicle_seats}} </h6>
-
-          </div>
-        </div>
         {% endif %}
       </article>
+      {% endif %}
     </section>
     <section id="forms">
       <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Edit</h2>
@@ -165,11 +179,14 @@
         <div>
           <div class="bd-example-snippet bd-code-snippet">
             <div class="bd-example">
-
+              {% if ride.owner.username == request.user.username %}
               <button type="button" class="btn btn-warning" onclick="enableFieldset('fieldset1')">Start Edit</button>
-              <form  action="{% url 'ride:ride_status'  ride.rid %}" method="POST">
+              {% else %}
+              <p class="lead">You can't edit ride because you are a sharer</p>
+              {% endif %}
+              <form  action="{% url 'ride:ride_status'  ride.rid %}" method="post">
                 {% csrf_token %}
-                <fieldset id="fieldset1" aria-label="Disabled fieldset example">
+                <fieldset disabled id="fieldset1" aria-label="Disabled fieldset example">
                   <div class="mb-3">
                     <label for="pickup-loc" class="form-label">Pickup</label>
                     <input name="pickup-loc" type="text" class="form-control form-control-sm" id="pickup-loc"
