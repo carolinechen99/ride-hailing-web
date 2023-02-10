@@ -180,10 +180,14 @@
           <div class="bd-example-snippet bd-code-snippet">
             <div class="bd-example">
               {% if ride.owner.username == request.user.username %}
-              <button type="button" class="btn btn-warning" onclick="enableFieldset('fieldset1')">Start Edit</button>
+                {% if not driver %}
+                <button type="button" class="btn btn-warning" onclick="enableFieldset('fieldset1')">Start Edit</button>
+                {% endif %}
               {% else %}
               <p class="lead">You can't edit ride because you are a sharer</p>
               {% endif %}
+
+
               <form  action="{% url 'ride:ride_status'  ride.rid %}" method="post">
                 {% csrf_token %}
                 <fieldset disabled id="fieldset1" aria-label="Disabled fieldset example">
