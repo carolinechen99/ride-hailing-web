@@ -84,7 +84,8 @@
 
   <div class="bd-cheatsheet container-fluid bg-body">
 
-
+    <!--alert-->
+    {% include 'partials/_alerts.html' %}
 
     <section id="Status">
       <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Ride Status</h2>
@@ -120,21 +121,55 @@
         </div>
         {% endif %}
       </article>
+
+      <article class="my-3" id="spinners">
+        <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+          <h3>Sharers Info</h3>
+        </div>
+        {% if not driver %}
+        <div>
+          <div class="bd-example-snippet bd-code-snippet">
+            <div class="bd-example">
+              <div class="spinner-border text-dark" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="lead">Searching for drivers...</p>
+              <p>Refreshing the page regularly to get latest driver search result</p>
+
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="bd-example-snippet bd-code-snippet">
+          <div class="bd-example">
+            <p class="lead">Driver on their way ... </p>
+            <h6>Driver Name: {{driver.first_name}} {{driver.last_name}}</h6>
+            <h6>Driver Phone: {{driver.phone}}</h6>
+            <h6>Vehicle Plate: {{driver.vehicle_plate}} </h6>
+            <h6>Vehicle Type: {{driver.vehicle_type}} </h6>
+            <h6>Vehicle Seats: {{driver.vehicle_seats}} </h6>
+
+          </div>
+        </div>
+        {% endif %}
+      </article>
     </section>
     <section id="forms">
-      <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Forms</h2>
+      <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Edit</h2>
 
       <article class="my-3" id="overview">
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-          <h3>Overview</h3>
+          <h3>Ride Details</h3>
         </div>
 
         <div>
           <div class="bd-example-snippet bd-code-snippet">
             <div class="bd-example">
-              <!-- <p class="lead">{{ride.allow_sharing}}</p> -->
-              <form>
-                <fieldset disabled aria-label="Disabled fieldset example">
+
+              <button type="button" class="btn btn-warning" onclick="enableFieldset('fieldset1')">Start Edit</button>
+              <form  action="{% url 'ride:ride_status'  ride.rid %}" method="POST">
+                {% csrf_token %}
+                <fieldset id="fieldset1" aria-label="Disabled fieldset example">
                   <div class="mb-3">
                     <label for="pickup-loc" class="form-label">Pickup</label>
                     <input name="pickup-loc" type="text" class="form-control form-control-sm" id="pickup-loc"
@@ -168,20 +203,24 @@
                     </div>
                   </div>
 
-                  <!-- <div class="mb-3 form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"  checked="{{ride.allow_sharing}}">
-            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-          </div>         -->
+                  <div class="mb-3 form-check form-switch">
 
-                  <!-- <div class="mb-3">
-            <label for="exampleSelect" class="form-label">Select menu</label>
-            <select class="form-select form-select-sm" id="exampleSelect">
-              <option value="CM">Compact</option>
-              <option value="SU">SUV</option>
-              <option value="LX">Luxury</option>
-              <option value="MV">Minivan</option>
-            </select>
-          </div> -->
+                    <input name="allow-sharing" class="form-check-input" type="checkbox" role="switch"
+                      id="allow-sharing" value="allow" checked="{{ride.allow_sharing}}">
+                    <label class="form-check-label" for="allow-sharing">Sharing Allowed</label>
+                    <h6>Original Allow value: {{ride.allow_sharing}}</h6>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="vehicle-type" class="form-label">Select menu</label>
+                    <select name="vehicle-type" class="form-select form-select-sm" id="vehicle-type">
+                      <option value="CM">Compact</option>
+                      <option value="SU">SUV</option>
+                      <option value="LX">Luxury</option>
+                      <option value="MV">Minivan</option>
+                    </select>
+                    <h6>Original Vehicle type: {{ride.vehicle_type}}</h6>
+                  </div>
 
                   <div class="mb-3">
                     <label for="special" class="form-label">Special Request <span
@@ -190,8 +229,14 @@
                       value="{{ride.special_requirements}}"></textarea>
                   </div>
 
-                  <input class="btn btn-primary" type="submit"></input>
+                  
                 </fieldset>
+
+                <input class="btn btn-primary" type="submit" value="Finish Edit"></input>
+              </form>
+            </div>
+          </div>
+        </div>
 
 
       </article>
@@ -309,6 +354,8 @@
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
   <script src="{% static 'js/cheatsheet.js' %}"></script>
+
+  <script src="{% static 'js/status.js' %}"></script>
 </body>
 
 <!-- Footer -->
