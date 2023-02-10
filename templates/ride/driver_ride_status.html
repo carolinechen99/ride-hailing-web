@@ -33,7 +33,7 @@
 
           <!-- Fields -->
           <div class="row mb-5 fields">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-secondary">
                   <i class="fas fa-money-bill-alt"></i> Pickup:
@@ -50,43 +50,60 @@
 
               </ul>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-secondary">
                   <i class="fas fa-th-large"></i> Ride Owner:
-                  <span class="float-right">{{ rider_account.firstname }} </span>
+                  <span class="float-right">{{ rider }} </span>
                 </li>
 
                 <li class="list-group-item text-secondary">
                   <i class="fas fa-calendar"></i> Special request:
-                  <span class="float-right">{{ rider_account.special_requirements }}</span>
+                  <span class="float-right">{{ ride.special_requirements }}</span>
                 </li>
 
                 <li class="list-group-item text-secondary">
                     <i class="fas fa-calendar"></i> Owner party size:
                     <span class="float-right">{{ ride.owner_party_size }}</span>
-                  </li>
-
+                  </li> 
               </ul>
             </div>
-          </div>
 
-        <!--sharers = ArrayField(models.JSONField(), null=True),
-            parse the sharers array and display the names of the sharers and their party size
-        -->
-        {% if sharers %}
-            {% for share in shares %}
+            {% if sharers %}
+            {% for sharer in sharers %}
                 <!--disply sharers' username, firstname, and party size -->
-                <div class="row mb-5">
+                <div class="col-md-4">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-secondary">
+                      <i class="fas fa-th-large"></i> Sharer Username:
+                      <span class="float-right">{{ sharer.username }} </span>
+                    </li>
+    
+                    <li class="list-group-item text-secondary">
+                      <i class="fas fa-calendar"></i> Sharer First Name:
+                      <span class="float-right">{{ sharer.firstname }}</span>
+                    </li>
+    
+                    <li class="list-group-item text-secondary">
+                        <i class="fas fa-calendar"></i> Sharer Party Size:
+                        <span class="float-right">{{ sharer.party }}</span>
+                      </li> 
+                  </ul>
+                </div>
+                <!-- <div class="row mb-5">
                     <div class="col-md-12">
-                        <h5 class="text-secondary">Sharer Username: {{ share.username }}</h5>
-                        <h5 class="text-secondary">First Name: {{ share.firstname }}</h5>
-                        <h5 class="text-secondary">Party Size: {{ share.party_size }}</h5>
+                        <h5 class="text-secondary">Sharer Username: {{ sharer.username }}</h5>
+                        <h5 class="text-secondary">First Name: {{ sharer.firstname}}</h5>
+                        <h5 class="text-secondary">Party Size: {{ sharer.party }}</h5>
                     </div>
-                  </div>
+                  </div> -->
 
             {% endfor %}
         {% endif %}
+          </div>
+
+        
+        
 
 
 

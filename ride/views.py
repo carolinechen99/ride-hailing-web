@@ -158,7 +158,8 @@ def ride_status(request, ride_rid):
                 status='CP').exclude(status='CL')
             # Get all rides that the user is a sharer
 
-            sharer_rides = Ride.objects.filter(sharers_username__contains=[request.user.username]).exclude(status='CP').exclude(status='CL')
+            sharer_rides = Ride.objects.filter(sharers_username__contains=[
+                                               request.user.username]).exclude(status='CP').exclude(status='CL')
 
             all_rides = all_rides | sharer_rides
             # Get the ride that the user is looking for
@@ -240,7 +241,7 @@ def ride_status(request, ride_rid):
                 ride.status = 'CL'
                 ride.save()
                 return redirect('ride:ride_status', ride_rid=new_ride.rid)
-        
+
         # if the pickup location or special is changed, update the ride
         if pickup_location != ride.pickup_location or special != ride.special:
             ride.pickup_location = pickup_location
@@ -304,26 +305,29 @@ def driver_ride_status(request, ride_rid):
             ride.save()
 
             # get rider's account
-            rider_account = Account.objects.get(username=ride.owner.username)
+            rider_fn = ride.owner.username
             # get sharers' accounts
             sharer_accounts = []
             if ride.allow_sharing:
-                if ride.sharers:
+                if ride.sharers_username:
                     # get sharers' accounts by username, sharer's username is the first element of the sharer tuple
                     # example json data of sharers with only one sharer with username 'sharer1': [{"sharer1": 1}]
-                    for sharer in ride.sharers:
+                    for usrn in ride.sharers_username:
                         sharer_accounts.append(
-                            Account.objects.get(username=sharer[0]))
+                            Account.objects.get(username=usrn))
 
             # create new array to store shares' username, first name and party size
             sharers = []
-            for sharer in sharer_accounts:
-                sharers.append(
-                    (sharer.username, sharer.first_name, sharer.party_size))
+            for (sharer, party) in zip(sharer_accounts, ride.sharers_party_size):
+                new = {'username': sharer.username,
+                       'firstname': sharer.first_name,
+                       'party': party}
+
+                sharers.append(new)
 
             context = {
                 'ride': ride,
-                'rider_account': rider_account,
+                'rider': rider_fn,
                 'sharers': sharers
             }
 

@@ -50,7 +50,6 @@
 
                 <form action="{% url 'ride:sharer_select' %}" method="POST">
                   {% csrf_token %}
-                  <p>{{party}}</p>
                   <input type="hidden" name="party-size" value="{{ party }}">
                   <input type="number" style="display:none" name="rid" value="{{ ride.rid }}">
                   <input class="w-100 btn btn-primary btn-lg" type="submit" value="Join"></input>
