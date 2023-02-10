@@ -160,7 +160,8 @@ def ride_status(request, ride_rid):
             sharer_rides = Ride.objects.filter(sharers_username__contains=[
                                                request.user.username]).exclude(status='CP').exclude(status='CL')
             all_rides = all_rides | sharer_rides
-            
+            # Get the ride that the user is looking for
+            ride = Ride.objects.get(rid=ride_rid)
             # get sharers' accounts
             sharer_accounts = []
             if ride.allow_sharing:
@@ -173,15 +174,14 @@ def ride_status(request, ride_rid):
             # Get the sharers
             # create new array to store shares' username, first name and party size
             sharers = []
-            for (sharer, party) in zip(sharer_accounts, ride.sharers_party_size):
-                new = {'username': sharer.username,
-                       'firstname': sharer.first_name,
-                       'party': party}
+            if ride.allow_sharing:
+                if ride.sharers_username:
+                    for (sharer, party) in zip(sharer_accounts, ride.sharers_party_size):
+                        new = {'username': sharer.username,
+                               'firstname': sharer.first_name,
+                               'party': party}
+                        sharers.append(new)
 
-                sharers.append(new)
-                
-            # Get the ride that the user is looking for
-            ride = Ride.objects.get(rid=ride_rid)
             if ride.status == 'CF':
                 driver = Account.objects.get(username=ride.driver.username)
                 return render(request, 'ride/ride_status.html', {'ride': ride, 'driver': driver, 'all_rides': all_rides, 'sharers': sharers})
@@ -214,18 +214,18 @@ def ride_status(request, ride_rid):
         if ride.status == 'CL':
             messages.error(request, 'Sorry, your ride is already cancelled')
             return redirect('ride:ride_status', ride_rid=ride_rid)
-        # if the destination or arrival time or allow sharing or vehicle type is changed, create a new ride
-        if destination != ride.destination or arr_time != ride.arr_time or allow_sharing != ride.allow_sharing or vehicle_type != ride.vehicle_type:
+        # if the destination or allow sharing or vehicle type is changed, create a new ride
+        if destination != ride.destination or allow_sharing != ride.allow_sharing or vehicle_type != ride.vehicle_type:
             # set up a new ride
             new_ride = Ride(
                 owner=request.user,
                 destination=destination,
                 pickup_location=pickup_location,
-                arr_time=arr_time,
+                required_arrival_time=arr_time,
                 owner_party_size=party_size,
                 allow_sharing=allow_sharing,
                 vehicle_type=vehicle_type,
-                special=special
+                special_requirements=special
             )
             new_ride.save()
             # update the old ride to cancelled
@@ -248,11 +248,11 @@ def ride_status(request, ride_rid):
                     owner=request.user,
                     destination=destination,
                     pickup_location=pickup_location,
-                    arr_time=arr_time,
+                    required_arrival_time=arr_time,
                     owner_party_size=party_size,
                     allow_sharing=allow_sharing,
                     vehicle_type=vehicle_type,
-                    special=special
+                    special_requirements=special
                 )
                 new_ride.save()
                 # update the old ride to cancelled
@@ -260,10 +260,11 @@ def ride_status(request, ride_rid):
                 ride.save()
                 return redirect('ride:ride_status', ride_rid=new_ride.rid)
 
-        # if the pickup location or special is changed, update the ride
-        if pickup_location != ride.pickup_location or special != ride.special:
+        # if the pickup location, arrival time, or special is changed, update the ride
+        if pickup_location != ride.pickup_location or special != ride.special_requirements or arr_time != ride.required_arrival_time:
             ride.pickup_location = pickup_location
-            ride.special = special
+            ride.special_requirements = special
+            ride.required_arrival_time = arr_time
             ride.save()
             # display a message saying change is successful
             messages.success("Your ride has been updated successfully")
@@ -336,12 +337,13 @@ def driver_ride_status(request, ride_rid):
 
             # create new array to store shares' username, first name and party size
             sharers = []
-            for (sharer, party) in zip(sharer_accounts, ride.sharers_party_size):
-                new = {'username': sharer.username,
-                       'firstname': sharer.first_name,
-                       'party': party}
-
-                sharers.append(new)
+            if ride.allow_sharing:
+                if ride.sharers_username:
+                    for (sharer, party) in zip(sharer_accounts, ride.sharers_party_size):
+                        new = {'username': sharer.username,
+                               'firstname': sharer.first_name,
+                               'party': party}
+                        sharers.append(new)
 
             context = {
                 'ride': ride,

@@ -25,48 +25,42 @@
       toast.show()
     })
 
-  // Disable empty links and submit buttons
-  document.querySelectorAll('[href="#"], [type="submit"]')
-    .forEach(link => {
-      link.addEventListener('click', event => {
-        event.preventDefault()
-      })
-    })
 
-  function setActiveItem() {
-    const { hash } = window.location
 
-    if (hash === '') {
-      return
-    }
+  // function setActiveItem() {
+  //   const { hash } = window.location
 
-    const link = document.querySelector(`.bd-aside a[href="${hash}"]`)
+  //   if (hash === '') {
+  //     return
+  //   }
 
-    if (!link) {
-      return
-    }
+  //   const link = document.querySelector(`.bd-aside a[href="${hash}"]`)
 
-    const active = document.querySelector('.bd-aside .active')
-    const parent = link.parentNode.parentNode.previousElementSibling
+  //   if (!link) {
+  //     return
+  //   }
 
-    link.classList.add('active')
+  //   const active = document.querySelector('.bd-aside .active')
+  //   const parent = link.parentNode.parentNode.previousElementSibling
 
-    if (parent.classList.contains('collapsed')) {
-      parent.click()
-    }
+  //   link.classList.add('active')
 
-    if (!active) {
-      return
-    }
+  //   if (parent.classList.contains('collapsed')) {
+  //     parent.click()
+  //   }
 
-    const expanded = active.parentNode.parentNode.previousElementSibling
+  //   if (!active) {
+  //     return
+  //   }
 
-    active.classList.remove('active')
+  //   const expanded = active.parentNode.parentNode.previousElementSibling
 
-    if (expanded && parent !== expanded) {
-      expanded.click()
-    }
-  }
+  //   active.classList.remove('active')
+
+  //   if (expanded && parent !== expanded) {
+  //     expanded.click()
+  //   }
+  // }
 
   setActiveItem()
   window.addEventListener('hashchange', setActiveItem)

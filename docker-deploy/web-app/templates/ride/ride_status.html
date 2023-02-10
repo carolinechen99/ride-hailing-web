@@ -90,7 +90,7 @@
     <section id="Status">
       <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Ride Status</h2>
 
-      <article class="my-3" id="spinners">
+      <article class="my-3" id="spinners1">
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
           <h3>Where's my ride</h3>
         </div>
@@ -123,7 +123,7 @@
       </article>
 
       {% if ride.allow_sharing %}
-      <article class="my-3" id="spinners">
+      <article class="my-3" id="spinners2">
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
           <h3>Sharers Info</h3>
         </div>
@@ -209,11 +209,12 @@
                   </div>
                   <div class="mb-3">
                     <label for="arr-time" class="form-label">Required arrival time</label>
-                    <input name="arr-time" type="datetime" class="form-control form-control-sm" id="arr-time"
+                    <input name="arr-time" type="datetime-local" class="form-control form-control-sm" id="arr-time"
                       value="{{ride.required_arrival_time}}" placeholder="{{ride.required_arrival_time}}" required>
                     <div class="invalid-feedback">
                       Your arrival date/time is required.
                     </div>
+                    <h6>Original Arrival Time: {{ride.required_arrival_time}}</h6>
                   </div>
                   <div class="mb-3">
                     <label for="party-size" class="form-label">Number of Passengers</label>
@@ -252,8 +253,11 @@
 
                   
                 </fieldset>
-
-                <input class="btn btn-primary" type="submit" value="Finish Edit">
+                {% if ride.owner.username == request.user.username %}
+                {% if not driver %}
+                <input type="submit" class="btn btn-primary" value="Finish Edit">
+                {% endif %}
+                {% endif %}
               </form>
             </div>
           </div>
@@ -371,12 +375,9 @@
 
 
 
-
+  <script src="{% static 'js/status.js' %}"></script>
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-  <script src="{% static 'js/cheatsheet.js' %}"></script>
-
-  <script src="{% static 'js/status.js' %}"></script>
 </body>
 
 <!-- Footer -->
