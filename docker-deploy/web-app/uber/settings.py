@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-ra(&rid4gwo(hv%pcw&bnac-**4)=r-%3zz7mxb$+jii)5e@ny
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['vcm-31217.vm.duke.edu','127.0.0.1']
+ALLOWED_HOSTS = ['vcm-31217.vm.duke.edu','127.0.0.1', 'web']
+
+CSRF_TRUSTED_ORIGINS = ['http://*.vcm-xxxxx.vm.duke.edu:8000','http://*.127.0.0.1:8000'] 
+
+
 
 
 # Application definition
@@ -46,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -76,27 +80,27 @@ WSGI_APPLICATION = 'uber.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
+    }
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'rideshare_db',
-#         'USER': 'jl1188',
-#         'PASSWORD': 'rideshare',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
+#         'NAME': 'uber',
+#         'USER': 'postgres',
+#         'PASSWORD':'123456',
+#         'HOST': 'localhost'
 #     }
+
 # }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'uber',
-        'USER': 'postgres',
-        'PASSWORD':'123456',
-        'HOST': 'localhost'
-    }
-
-}
 
 
     # 'default': {
