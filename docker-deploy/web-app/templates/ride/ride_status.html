@@ -188,7 +188,7 @@
               {% endif %}
 
 
-              <form  action="{% url 'ride:ride_status'  ride.rid %}" method="post">
+              <form action="{% url 'ride:ride_status' ride.rid %}" method="post">
                 {% csrf_token %}
                 <fieldset disabled id="fieldset1" aria-label="Disabled fieldset example">
                   <div class="mb-3">
@@ -253,7 +253,7 @@
                   
                 </fieldset>
 
-                <input class="btn btn-primary" type="submit" value="Finish Edit"></input>
+                <input class="btn btn-primary" type="submit" value="Finish Edit">
               </form>
             </div>
           </div>
