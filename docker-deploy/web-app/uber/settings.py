@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-ra(&rid4gwo(hv%pcw&bnac-**4)=r-%3zz7mxb$+jii)5e@ny
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['vcm-31217.vm.duke.edu','127.0.0.1']
+ALLOWED_HOSTS = ['vcm-31217.vm.duke.edu','127.0.0.1', 'web']
+
+CSRF_TRUSTED_ORIGINS = ['http://*.vcm-xxxxx.vm.duke.edu:8000','http://*.127.0.0.1:8000'] 
+
+
 
 
 # Application definition
@@ -78,11 +82,11 @@ WSGI_APPLICATION = 'uber.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rideshare_db',
-        'USER': 'jl1188',
-        'PASSWORD': 'rideshare',
-        'HOST': '127.0.0.1',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
