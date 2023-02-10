@@ -169,7 +169,7 @@
               <button type="button" class="btn btn-warning" onclick="enableFieldset('fieldset1')">Start Edit</button>
               <form  action="{% url 'ride:ride_status'  ride.rid %}" method="POST">
                 {% csrf_token %}
-                <fieldset id="fieldset1" aria-label="Disabled fieldset example">
+                <fieldset disabled id="fieldset1" aria-label="Disabled fieldset example">
                   <div class="mb-3">
                     <label for="pickup-loc" class="form-label">Pickup</label>
                     <input name="pickup-loc" type="text" class="form-control form-control-sm" id="pickup-loc"
