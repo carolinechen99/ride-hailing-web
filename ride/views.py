@@ -112,9 +112,9 @@ def sharer_request(request):
 def calc_available_space(ride):
     # if the ride already have sharers, add up the party size of all sharers
     current_sharer_size = 0
-    if ride.sharers:
-        for sharer in ride.sharers:
-            current_sharer_size += sharer['party_size']
+    if ride.sharers_username:
+        for party in ride.sharers_party_size:
+            current_sharer_size += party
     # calculate the number of current riders
     curr_riders = ride.owner_party_size + current_sharer_size
 
@@ -141,10 +141,11 @@ def sharer_select(request):
         rid = request.POST.get('rid')
         party_size = request.POST.get('party-size')
         ride = Ride.objects.get(rid=rid)
-        if not ride.sharers:
-            ride.sharers = []
-        ride.sharers.append(
-            {'username': request.user.username, 'party_size': int(party_size)})
+        if not ride.sharers_username:
+            ride.sharers_username = []
+            ride.sharers_party_size = []
+        ride.sharers_username.append(request.user.username)
+        ride.sharers_party_size.append(int(party_size))
         ride.save()
         return HttpResponseRedirect(reverse('ride:ride_status', args=(int(rid),)))
 
@@ -157,8 +158,7 @@ def ride_status(request, ride_rid):
                 status='CP').exclude(status='CL')
             # Get all rides that the user is a sharer
 
-            sharer_rides = Ride.objects.filter(sharers__contains=[
-                                               {'username': 'selina2', }]).exclude(status='CP').exclude(status='CL')
+            sharer_rides = Ride.objects.filter(sharers_username__contains=[request.user.username]).exclude(status='CP').exclude(status='CL')
 
             all_rides = all_rides | sharer_rides
             # Get the ride that the user is looking for

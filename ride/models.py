@@ -25,7 +25,8 @@ class Ride(models.Model):
     driver = models.ForeignKey(User, related_name='driver', on_delete=models.DO_NOTHING, null=True)
     owner = models.ForeignKey(User,related_name='owner', on_delete=models.DO_NOTHING, null=True)
     owner_party_size = models.IntegerField()
-    sharers = ArrayField(models.JSONField(), null=True)
+    sharers_username = ArrayField(models.CharField(max_length=100), null=True) # changed to Array of usernames
+    sharers_party_size = ArrayField(models.IntegerField(), null=True) # corresponds to sharers_username
     required_arrival_time = models.DateTimeField()
     pickup_location = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
