@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-init
+  name: web-init
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web-init
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-deploy-default: "true"
+        io.kompose.service: web-init
+    spec:
+      containers:
+        - args:
+            - /code/initserver.sh
+          image: web-init
+          name: web-init
+          resources: {}
+          volumeMounts:
+            - mountPath: /code
+              name: web-init-claim0
+      restartPolicy: Always
+      volumes:
+        - name: web-init-claim0
+          persistentVolumeClaim:
+            claimName: web-init-claim0
+status: {}
